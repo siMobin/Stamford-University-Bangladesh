@@ -1,0 +1,24 @@
+.vscode
+
+########### build #######
+node
+node_modules
+*x64
+# package.json
+*lock.json
+#########################
+#########################
+*.zip
+*.exe
+#########################
+doc
+Documents
+*.pdf
+*.docx
+*.txt
+*.css
+*.css.map
+
+#########################
+FAQ.*
+*temp*

@@ -1,0 +1,50 @@
+$white: white;
+$blue_lite: rgb(25, 47, 89);
+$blue: rgb(5, 15, 30);
+
+
+$sidebar-width: 200px;
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#sidebar {
+    position: fixed;
+    width: $sidebar-width;
+    height: 100%;
+    background: #f8f9fa;
+    overflow-y: auto;
+
+
+    .logo {
+        width: 100%;
+        padding: 20px 0;
+        text-align: center;
+        background: #343a40;
+        color: white;
+    }
+
+    .menu-item {
+        width: 100%;
+        padding: 10px 15px;
+        box-sizing: border-box;
+        box-shadow: inset 0 -1px rgba(0, 0, 0, .15);
+        cursor: pointer;
+
+        &.active {
+            background: #007bff;
+            color: white;
+        }
+    }
+}
+
+main,
+nav,
+header {
+    margin-left: $sidebar-width;
+    padding: 20px;
+}
