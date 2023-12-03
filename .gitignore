@@ -22,3 +22,9 @@ Documents
 #########################
 FAQ.*
 *temp*
+
+# Temporary ignored
+main/header_slider/images
+
+# Not ignored
+!main/header_slider/assets/index.css

@@ -1,0 +1,95 @@
+@use 'root' as *;
+
+footer {
+    color: $white;
+    padding: 2em 1em;
+    background-color: $blue;
+
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 1em;
+
+        .logo,
+        img,
+        p {
+            font-size: 14px;
+            font-style: italic;
+            max-width: 350px;
+            padding: 20px 0;
+        }
+
+        div {
+            h3 {
+                margin-bottom: .5em;
+                border-bottom: 1px solid $white;
+            }
+
+            li {
+                margin-bottom: .5em;
+                list-style-type: none;
+            }
+
+            a {
+                color: rgba($white, .5);
+
+                &:hover {
+                    color: $white;
+                }
+            }
+        }
+
+        img:not(.logo),
+        iframe {
+            padding: 0;
+            height: 200px;
+            width: 350px;
+            object-fit: cover;
+
+        }
+
+        .campus {
+            h4 {
+                text-align: center;
+            }
+        }
+
+        .social {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            gap: 1.5em;
+
+            a {
+                padding: .5em;
+                color: rgba($white, .5);
+                background-color: rgba($blue_lite, .3);
+                border-radius: 5px;
+                font-size: 30px;
+                height: 30px;
+                text-align: center;
+                aspect-ratio: 1;
+
+                &:hover {
+                    color: $white;
+                }
+
+                i {
+                    font-size: 28px;
+                }
+            }
+        }
+    }
+
+    hr {
+        margin-top: 1em;
+    }
+
+    .copyright {
+        margin-top: 2em;
+        border-top: 1px solid $blue_lite;
+        font-size: 10px;
+        color: gray;
+    }
+}
