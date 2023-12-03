@@ -1,5 +1,5 @@
 <?php
-require_once('./conn.php');
+require_once('../conn.php');
 
 
 // Initialize variables
@@ -57,11 +57,13 @@ sqlsrv_close($conn);
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration Page</title>
 </head>
+
 <body>
     <h2>Student Registration</h2>
     <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
@@ -102,4 +104,5 @@ sqlsrv_close($conn);
 
     <?php echo $registrationMessage; ?>
 </body>
+
 </html>
