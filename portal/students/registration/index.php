@@ -1,58 +1,12 @@
 <?php
-require_once('../conn.php');
+session_start();
 
-
-// Initialize variables
-$department = '';
-$stuID = '';
-$name = '';
-$dateofbirth = '';
-$email = '';
-$securityQ = '';
-$securityAns = '';
-$passcode = '';
-$creationDate = date('Y-m-d');
-$registrationMessage = '';
-
-// Check if form is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Retrieve user inputs
-    $department = $_POST['department'];
-    $stuID = $_POST['stuID'];
-    $name = $_POST['name'];
-    $dateofbirth = $_POST['dateofbirth'];
-    $email = $_POST['email'];
-    $securityQ = $_POST['securityQ'];
-    $securityAns = $_POST['securityAns'];
-    $passcode = password_hash($_POST['passcode'], PASSWORD_BCRYPT);
-
-    // Insert data into Student_info table
-    $sqlInfo = "INSERT INTO Student_info (department, StuID, name_, dateofbirth, email, SecurityQ, Securityans, creationdate) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-    $paramsInfo = array($department, $stuID, $name, $dateofbirth, $email, $securityQ, $securityAns, $creationDate);
-
-    $stmtInfo = sqlsrv_query($conn, $sqlInfo, $paramsInfo);
-
-    // Insert data into Student_login table
-    $sqlLogin = "INSERT INTO Student_login (department, ID, passcode) VALUES (?, ?, ?)";
-    $paramsLogin = array($department, $stuID, $passcode);
-
-    $stmtLogin = sqlsrv_query($conn, $sqlLogin, $paramsLogin);
-
-    // Check if both queries were successful
-    if ($stmtInfo && $stmtLogin) {
-        $registrationMessage = "Registration successful";
-    } else {
-        $registrationMessage = "Registration failed";
-    }
-
-    // Close the statements
-    sqlsrv_free_stmt($stmtInfo);
-    sqlsrv_free_stmt($stmtLogin);
+if (isset($_SESSION["studentId"])) {
+    $studentId = $_SESSION["studentId"];
+    // User is logged in, redirect to the home page
+    header("Location: ../$studentId");
+    exit;
 }
-
-// Close the database connection
-sqlsrv_close($conn);
 ?>
 
 <!DOCTYPE html>
@@ -61,48 +15,71 @@ sqlsrv_close($conn);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration Page</title>
+    <link rel="stylesheet" href="./style.css">
+    <title>Student Registration</title>
 </head>
 
 <body>
-    <h2>Student Registration</h2>
-    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-        <label for="department">Department:</label>
-        <input type="text" name="department" id="department" required>
-        <br>
+    <section>
+        <div class="form">
 
-        <label for="stuID">Student ID:</label>
-        <input type="text" name="stuID" id="stuID" required>
-        <br>
+            <div class="title">
+                <img src="../images/logo.png" alt="">
+                <h2>Create a new account</h2>
+            </div>
 
-        <label for="name">Name:</label>
-        <input type="text" name="name" id="name" required>
-        <br>
+            <form action="register.php" method="post">
 
-        <label for="dateofbirth">Date of Birth:</label>
-        <input type="date" name="dateofbirth" id="dateofbirth" required>
-        <br>
+                <div>
+                    <label class="required" for="studentId">Student ID</label>
+                    <input type="text" id="studentId" name="studentId" required placeholder="CSE12345678">
+                </div>
 
-        <label for="email">Email:</label>
-        <input type="email" name="email" id="email" required>
-        <br>
+                <div>
+                    <label class="required" for="batch">Batch</label>
+                    <input type="text" id="batch" name="batch" required placeholder="78X">
+                </div>
 
-        <label for="securityQ">Security Question:</label>
-        <input type="text" name="securityQ" id="securityQ" required>
-        <br>
+                <div>
+                    <label class="required" for="department">Department</label>
+                    <input type="text" id="department" name="department" required placeholder="CSE">
+                </div>
 
-        <label for="securityAns">Security Answer:</label>
-        <input type="text" name="securityAns" id="securityAns" required>
-        <br>
+                <div>
+                    <label class="required" for="email">Email</label>
+                    <input type="email" id="email" name="email" required placeholder="you@gmail.com">
+                </div>
 
-        <label for="passcode">Password:</label>
-        <input type="password" name="passcode" id="passcode" required>
-        <br>
+                <div>
+                    <label class="required" for="password">Password</label>
+                    <input type="password" id="password" name="password" required placeholder="password">
+                </div>
 
-        <input type="submit" value="Register">
-    </form>
+                <div>
+                    <label class="required" for="securityQuestion">Security Question</label>
+                    <select id="securityQuestion" name="securityQuestion" required>
+                        <!-- <option value="">Select a security question</option> -->
+                        <option value="What is your mother's maiden name?">What is your mother's maiden name?</option>
+                        <option value="What is the name of your first pet?">What is the name of your first pet?</option>
+                        <option value="In which city were you born?">In which city were you born?</option>
+                    </select>
+                </div>
 
-    <?php echo $registrationMessage; ?>
+                <div>
+                    <label class="required" for="securityAnswer">Security Answer</label>
+                    <input type="text" id="securityAnswer" name="securityAnswer" required>
+                </div>
+
+                <input class="submit" type="submit" value="Register">
+                <br>
+                <span>
+                    <p>Already have an account?</p><a href="../login/">Login</a>
+                </span>
+            </form>
+        </div>
+        <img src="https://images.pexels.com/photos/1438081/pexels-photo-1438081.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" loading="lazy">
+    </section>
+
 </body>
 
 </html>

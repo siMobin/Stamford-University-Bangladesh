@@ -1,49 +1,15 @@
 <?php
-require_once('../conn.php');
+session_start();
 
-// Initialize variables
-$department = '';
-$id = '';
-$password = '';
-$loginMessage = '';
-
-// Check if form is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Retrieve user inputs
-    $department = $_POST['department'];
-    $id = $_POST['ID'];
-    $password = $_POST['passcode'];
-
-    // Query the database for the login credentials
-    $sql = "SELECT passcode FROM Student_login WHERE department = ? AND ID = ?";
-    $params = array($department, $id);
-
-    $stmt = sqlsrv_query($conn, $sql, $params);
-
-    if ($stmt === false) {
-        die(print_r(sqlsrv_errors(), true));
-    }
-
-    // Fetch the result
-    $row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC);
-
-    // Verify the password
-    if ($row && password_verify($password, $row['passcode'])) {
-        // Password is correct, redirect to studentdash.php
-        header("Location: studentdash.php");
-        exit();
-    } else {
-        // Invalid login credentials
-        $loginMessage = "Invalid login credentials";
-    }
-
-    // Close the statement
-    sqlsrv_free_stmt($stmt);
+if (isset($_SESSION["studentId"])) {
+    $studentId = $_SESSION["studentId"];
+    // User is logged in, redirect to the home page
+    header("Location: ../$studentId");
+    exit;
 }
-
-// Close the database connection
-sqlsrv_close($conn);
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -51,28 +17,53 @@ sqlsrv_close($conn);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
+    <link rel="stylesheet" href="./style.css">
+    <title>Student Login</title>
 </head>
 
 <body>
-    <h2>Login</h2>
-    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-        <label for="department">Department:</label>
-        <input type="text" name="department" id="department" required>
-        <br>
+    <?php //include '../nav.php'; 
+    ?>
 
-        <label for="ID">ID:</label>
-        <input type="text" name="ID" id="ID" required>
-        <br>
+    <section>
+        <div class="form">
 
-        <label for="passcode">Password:</label>
-        <input type="password" name="passcode" id="passcode" required>
-        <br>
+            <div class="title">
+                <img src="../images/logo.png" alt="">
+                <h2>Login to Stamford</h2>
+            </div>
 
-        <input type="submit" value="Login">
-    </form>
+            <form action="login.php" method="post">
+                <div>
+                    <label class="required" for="studentId">Student ID</label>
+                    <input type="text" id="studentId" name="studentId" placeholder="CSE12345678" required>
+                </div>
 
-    <?php echo $loginMessage; ?>
+                <div>
+                    <label class="required" for="batch">Batch</label>
+                    <input type="text" id="batch" name="batch" placeholder="78X" required>
+                </div>
+
+                <div>
+                    <label class="required" for="department">Department</label>
+                    <input type="text" id="department" name="department" placeholder="CSE" required>
+                </div>
+
+                <div>
+                    <label class="required" for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+
+                <input class="submit" type="submit" value="Login">
+                <span>
+                    <a href="../registration/">Create account</a><a href="#">Forgot Password?</a>
+                </span>
+            </form>
+        </div>
+        <img src="https://images.pexels.com/photos/1438081/pexels-photo-1438081.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" loading="lazy">
+    </section>
+    <?php //include '../footer.php'; 
+    ?>
 </body>
 
 </html>
