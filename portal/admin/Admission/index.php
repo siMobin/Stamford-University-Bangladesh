@@ -100,7 +100,6 @@ function getSemester() {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Information Form</title>
 
-<!-- ... (your existing HTML code) -->
 
 <script>
     // JavaScript to add and remove phone number input fields
@@ -152,9 +151,6 @@ function getSemester() {
     }
 
 </script>
-
-
-<!-- ... (rest of your HTML code) -->
 
 </head>
 <body>
