@@ -31,5 +31,14 @@
             </div>
         </div>
         <a href="#">avbryry</a>
+        <div class="dropdown">
+            <a href="#">Portal</a>
+            <div class="dropdown-content">
+                <a href="../portal/students/">Student Portal</a>
+                <a href="#">Faculty Portal</a>
+                <a href="#">Staff Portal</a>
+                <a href="../portal/admin/">Admin Portal</a>
+            </div>
+        </div>
     </section>
 </nav>

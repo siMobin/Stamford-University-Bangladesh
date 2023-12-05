@@ -1,3 +1,15 @@
+<?php
+session_start();
+
+if (!isset($_SESSION["studentId"])) {
+    $studentId = $_SESSION["studentId"];
+    // User is logged in, redirect to the home page
+    header("Location: ./login/");
+    exit;
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 

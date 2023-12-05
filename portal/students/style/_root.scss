@@ -10,6 +10,26 @@ $sidebar-width: 200px;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+
+    .required {
+        &::after {
+            content: "*";
+            color: red;
+            font-weight: 400;
+        }
+    }
+
+    .submit {
+        color: $white;
+        background-color: $blue_lite;
+        font-weight: 500;
+        padding: .5em 1.5em;
+        cursor: pointer;
+
+        &:hover {
+            background-color: $blue;
+        }
+    }
 }
 
 #sidebar {
