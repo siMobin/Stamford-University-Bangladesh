@@ -13,18 +13,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $updateEmailSql = "UPDATE students SET Email = ? WHERE StudentId = ?";
         $updateEmailParams = array($email, $_SESSION["studentId"]);
         $updateEmailStmt = sqlsrv_query($conn, $updateEmailSql, $updateEmailParams);
+        $updateEmailSql = "UPDATE student_login SET Email = ? WHERE StudentId = ?";
+        $updateEmailStmt = sqlsrv_query($conn, $updateEmailSql, $updateEmailParams);
     }
 
-    if (isset($_POST["phoneNumbers"])) {
-        $phoneNumbers = $_POST["phoneNumbers"];
-        $phoneNumbersArray = explode(",", $phoneNumbers);
-        foreach ($phoneNumbersArray as $phoneNumber) {
-            if (isset($_POST["connectionType"])) {
-                $connectionType = $_POST["connectionType"];
-                $insertPhoneSql = "INSERT INTO phone (StudentId, Phone, ConnectionType) VALUES (?, ?, ?)";
-                $insertPhoneParams = array($_SESSION["studentId"], $phoneNumber, $connectionType);
-                $insertPhoneStmt = sqlsrv_query($conn, $insertPhoneSql, $insertPhoneParams);
-            }
+    $phones = $_POST["phones"];
+    $connectionTypes = $_POST["connectionTypes"];
+
+    foreach ($phones as $index => $phone) {
+        // Get the corresponding connection type from the form
+        $connectionType = $connectionTypes[$index];
+
+        $insertPhoneQuery = "INSERT INTO phone (StudentId, Phone, ConnectionType) VALUES (?, ?, ?)";
+        $paramsPhone = array($studentId, $phone, $connectionType);
+        $stmtPhone = sqlsrv_query($conn, $insertPhoneQuery, $paramsPhone);
+
+        if ($stmtPhone === false) {
+            die(print_r(sqlsrv_errors(), true));
         }
     }
 
@@ -34,13 +39,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $updatePresentAddressParams = array($presentAddress, $_SESSION["studentId"]);
         $updatePresentAddressStmt = sqlsrv_query($conn, $updatePresentAddressSql, $updatePresentAddressParams);
     }
-
-    // if (isset($_POST["newPermanentAddress"])) {
-    //     $newPermanentAddress = $_POST["newPermanentAddress"];
-    //     $updatePermanentAddressSql = "UPDATE students SET PermanentAddress = ? WHERE StudentId = ?";
-    //     $updatePermanentAddressParams = array($newPermanentAddress, $_SESSION["studentId"]);
-    //     $updatePermanentAddressStmt = sqlsrv_query($conn, $updatePermanentAddressSql, $updatePermanentAddressParams);
-    // }
 
     if (isset($_POST["parentName"])) {
         $parentName = $_POST["parentName"];
@@ -63,7 +61,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $updateFatherOccupationStmt = sqlsrv_query($conn, $updateFatherOccupationSql, $updateFatherOccupationParams);
     }
 
-    sqlsrv_close($conn);
+    if (isset($_POST["securityQuestion"])) {
+        $securityQuestion = $_POST["securityQuestion"];
+        $updatesecurityQuestionSql = "UPDATE student_login SET securityQuestion = ? WHERE StudentId = ?";
+        $updatesecurityQuestionParams = array($securityQuestion, $_SESSION["studentId"]);
+        $updatesecurityQuestionStmt = sqlsrv_query($conn, $updatesecurityQuestionSql, $updatesecurityQuestionParams);
+    }
+
+    if (isset($_POST["securityAnswer"])) {
+        $securityAnswer = $_POST["securityAnswer"];
+        $updatesecurityAnswerSql = "UPDATE student_login SET securityAnswer = ? WHERE StudentId = ?";
+        $updatesecurityAnswerParams = array($securityAnswer, $_SESSION["studentId"]);
+        $updatesecurityAnswerStmt = sqlsrv_query($conn, $updatesecurityAnswerSql, $updatesecurityAnswerParams);
+    }
+
+
+
+
 }
 
 if (isset($_SESSION["studentId"])) {
@@ -99,28 +113,77 @@ sqlsrv_close($conn);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Update Information</title>
 </head>
+<script>
+    // JavaScript to add and remove phone number input fields
+function addPhoneNumber() {
+    var container = document.getElementById("phoneContainer");
+
+    // Create and append phone number input and connection type dropdown
+    var phoneGroup = createPhoneGroup();
+    container.appendChild(phoneGroup);
+}
+
+function removePhoneNumber() {
+    var container = document.getElementById("phoneContainer");
+    var phoneGroups = container.getElementsByClassName("phone-group");
+
+    // Ensure there is at least one phone number input
+    if (phoneGroups.length >= 1) {
+        container.removeChild(phoneGroups[phoneGroups.length - 1]);
+    }
+}
+
+function createPhoneGroup() {
+    var phoneGroup = document.createElement("div");
+    phoneGroup.className = "phone-group";
+
+    // Create and append phone number input
+    var input = createPhoneNumberInput();
+    phoneGroup.appendChild(input);
+
+    // Create and append connection type dropdown directly in HTML
+    phoneGroup.innerHTML += `
+        <label for="connectionTypes[]">Connection Type:</label>
+        <select name="connectionTypes[]" required>
+            <option value="self">Self</option>
+            <option value="parent">Parent</option>
+            <option value="guardian">Guardian</option>
+        </select>
+    `;
+
+    return phoneGroup;
+}
+
+function createPhoneNumberInput() {
+    var input = document.createElement("input");
+    input.type = "text";
+    input.name = "phones[]";
+    input.placeholder = "Phone Number";
+    return input;
+}
+</script>
 
 <body>
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
         <label for="email">Email</label>
         <input type="email" name="email" required value="<?php echo isset($email) ? $email : ''; ?>"><br>
 
-        <label for="phoneNumbers">Phone Numbers (comma-separated)</label>
-        <input type="text" name="phoneNumbers" required><br>
+        <label for="phones">New Phone Numbers:</label>
+        <div id="phoneContainer">
+            <input type="text" name="phones[]" placeholder="Phone Number" required>
+            <label for="connectionTypes[]">Connection Type:</label>
+            <select name="connectionTypes[]" required>
+                <option value="self">Self</option>
+                <option value="parent">Parent</option>
+                <option value="guardian">Guardian</option>
+            </select>
+        </div>
 
-        <label for="connectionType">Connection Type:</label>
-        <select name="connectionType" required>
-            <option value="Self">Self</option>
-            <option value="Parent">Parent</option>
-            <option value="Guardian">Guardian</option>
-        </select><br>
+        <button type="button" onclick="addPhoneNumber()">Add More Phones</button>
+        <button type="button" onclick="removePhoneNumber()">Remove Last Phone</button>
 
         <label for="presentAddress">Present Address:</label>
         <input type="text" name="presentAddress" value="<?php echo isset($presentAddress) ? $presentAddress : ''; ?>"><br>
-
-        <!-- <label for="newPermanentAddress">New Permanent Address:</label>
-        <input type="text" name="newPermanentAddress" value="<?php //echo isset($permanentAddress) ? $permanentAddress : ''; 
-                                                                ?>"><br> -->
 
         <label for="parentName">Guardian Name</label>
         <input type="text" name="parentName" value="<?php echo isset($parentName) ? $parentName : ''; ?>"><br>
@@ -130,6 +193,17 @@ sqlsrv_close($conn);
 
         <label for="fatherOccupation">Father's Occupation</label>
         <input type="text" name="fatherOccupation" value="<?php echo isset($fatherOccupation) ? $fatherOccupation : ''; ?>"><br>
+
+        <label class="required" for="securityQuestion">Security Question</label>
+                    <select id="securityQuestion" name="securityQuestion" required>
+                        <!-- <option value="">Select a security question</option> -->
+                        <option value="What is your mother's maiden name?">What is your mother's maiden name?</option>
+                        <option value="What is the name of your first pet?">What is the name of your first pet?</option>
+                        <option value="In which city were you born?">In which city were you born?</option>
+                    </select>
+
+        <label class="required" for="securityAnswer">Security Answer</label>
+         <input type="text" id="securityAnswer" name="securityAnswer" required>            
 
         <input type="submit" value="Update Information">
     </form>
