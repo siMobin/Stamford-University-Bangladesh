@@ -58,6 +58,7 @@ if (isset($_GET['logout'])) {
     </main>
 
 
+    <script src="./script/Updateinfo.js"></script>
     <script src="./script/index.js"></script>
 
 </body>
