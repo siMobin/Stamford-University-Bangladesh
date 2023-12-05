@@ -1,20 +1,19 @@
 @use 'root' as *;
 
 nav {
-    background-color: $white;
+    background-color: $blue_lite;
     padding: 0 1em;
     z-index: 9999999;
 
     a {
-        color: black;
+        color: $white;
         text-decoration: none;
         padding: 1em .5em;
         font-weight: 500;
 
-
         &:hover {
             background-color: $blue;
-            color: $white;
+            color: $white !important;
         }
     }
 
@@ -25,19 +24,25 @@ nav {
 
         .logo {
             height: 80px;
+            filter: brightness(0) invert(1);
         }
     }
 
     .main {
         display: flex;
         gap: 1em;
-        background-color: rgba($blue, .1);
+        background-color: rgba($white, 1);
         margin: 0 10em;
         // padding: 1em;
+        box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
         border-radius: 10px 10px 0 0;
         margin-bottom: 0em;
         z-index: 9999;
         align-items: center;
+
+        a {
+            color: $blue_lite ;
+        }
 
         .dropdown {
             position: relative;

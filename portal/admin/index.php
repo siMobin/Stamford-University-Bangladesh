@@ -12,7 +12,7 @@
     <div id="sidebar">
         <div class="logo"><img src="./images/logo.png" alt=""></div>
         <div class="menu-item active" data-page="home">Page 1</div>
-        <div class="menu-item" data-page="p2">Page 2</div>
+        <div class="menu-item" data-page="admissionoffline">Offline Admission</div>
         <div class="menu-item" data-page="p3">Page 3</div>
         <!-- <div class="menu-item" data-page="p4">Page 4</div> -->
 
@@ -30,6 +30,7 @@
 
 
     <script src="./script/index.js"></script>
+    <script src="./script/admissionoffline.js"></script>
 
 </body>
 

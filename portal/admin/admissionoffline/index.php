@@ -27,37 +27,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $permanentAddress = htmlspecialchars($_POST["PermanentAddress"]);
     $presentAddress = htmlspecialchars($_POST["PresentAddress"]);
 
-// Insert data into the students table
-$insertStudentsQuery = "INSERT INTO students (UID, StudentId, FirstName, LastName, DateOfBirth, RegNo, Email, Batch, Department, Program, Country, Semester, AdmissionDate, MotherName, FatherName, FatherOccupation, ParentName, ParentConnection, PermanentAddress, PresentAddress, Gender) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    // Insert data into the students table
+    $insertStudentsQuery = "INSERT INTO students (UID, StudentId, FirstName, LastName, DateOfBirth, RegNo, Email, Batch, Department, Program, Country, Semester, AdmissionDate, MotherName, FatherName, FatherOccupation, ParentName, ParentConnection, PermanentAddress, PresentAddress, Gender) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-$params = array(
-    $uid, $studentId, $firstName, $lastName, $dateOfBirth, $regNo, $email, $batch, $department, $program,
-    $country, $semester, $admissionDate, $motherName, $fatherName, $fatherOccupation, $parentName, $parentConnection,
-    $permanentAddress, $presentAddress, $gender
-);
+    $params = array(
+        $uid, $studentId, $firstName, $lastName, $dateOfBirth, $regNo, $email, $batch, $department, $program,
+        $country, $semester, $admissionDate, $motherName, $fatherName, $fatherOccupation, $parentName, $parentConnection,
+        $permanentAddress, $presentAddress, $gender
+    );
 
-$stmt = sqlsrv_query($conn, $insertStudentsQuery, $params);
+    $stmt = sqlsrv_query($conn, $insertStudentsQuery, $params);
 
-if ($stmt === false) {
-    die(print_r(sqlsrv_errors(), true));
-}
-
-// Insert data into the phone table
-$phones = $_POST["phones"];
-$connectionTypes = $_POST["connectionTypes"];
-
-foreach ($phones as $index => $phone) {
-    // Get the corresponding connection type from the form
-    $connectionType = $connectionTypes[$index];
-    
-    $insertPhoneQuery = "INSERT INTO phone (StudentId, Phone, ConnectionType) VALUES (?, ?, ?)";
-    $paramsPhone = array($studentId, $phone, $connectionType);
-    $stmtPhone = sqlsrv_query($conn, $insertPhoneQuery, $paramsPhone);
-
-    if ($stmtPhone === false) {
+    if ($stmt === false) {
         die(print_r(sqlsrv_errors(), true));
     }
-}
+
+    // Insert data into the phone table
+    $phones = $_POST["phones"];
+    $connectionTypes = $_POST["connectionTypes"];
+
+    foreach ($phones as $index => $phone) {
+        // Get the corresponding connection type from the form
+        $connectionType = $connectionTypes[$index];
+
+        $insertPhoneQuery = "INSERT INTO phone (StudentId, Phone, ConnectionType) VALUES (?, ?, ?)";
+        $paramsPhone = array($studentId, $phone, $connectionType);
+        $stmtPhone = sqlsrv_query($conn, $insertPhoneQuery, $paramsPhone);
+
+        if ($stmtPhone === false) {
+            die(print_r(sqlsrv_errors(), true));
+        }
+    }
 
     // You may also insert data into the student_login table here if needed
 
@@ -67,7 +67,8 @@ foreach ($phones as $index => $phone) {
 }
 
 // Function to generate a random 16-digit UID
-function generateUID() {
+function generateUID()
+{
     $characters = '0123456789';
     $uid = '';
     for ($i = 0; $i < 16; $i++) {
@@ -77,7 +78,8 @@ function generateUID() {
 }
 
 // Function to determine the current semester
-function getSemester() {
+function getSemester()
+{
     $currentMonth = date("n");
     $currentYear = date("Y");
 
@@ -96,64 +98,19 @@ function getSemester() {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Information Form</title>
 
 
-<script>
-    // JavaScript to add and remove phone number input fields
-    function addPhoneNumber() {
-        var container = document.getElementById("phoneContainer");
+    <script>
 
-        // Create and append phone number input and connection type dropdown
-        var phoneGroup = createPhoneGroup();
-        container.appendChild(phoneGroup);
-    }
-
-    function removePhoneNumber() {
-        var container = document.getElementById("phoneContainer");
-        var phoneGroups = container.getElementsByClassName("phone-group");
-
-        // Ensure there is at least one phone number input
-        if (phoneGroups.length >= 1) {
-            container.removeChild(phoneGroups[phoneGroups.length - 1]);
-        }
-    }
-
-    function createPhoneGroup() {
-        var phoneGroup = document.createElement("div");
-        phoneGroup.className = "phone-group";
-
-        // Create and append phone number input
-        var input = createPhoneNumberInput();
-        phoneGroup.appendChild(input);
-
-        // Create and append connection type dropdown directly in HTML
-        phoneGroup.innerHTML += `
-            <label for="connectionTypes[]">Connection Type:</label>
-            <select name="connectionTypes[]" required>
-                <option value="self">Self</option>
-                <option value="parent">Parent</option>
-                <option value="guardian">Guardian</option>
-            </select>
-        `;
-
-        return phoneGroup;
-    }
-
-    function createPhoneNumberInput() {
-        var input = document.createElement("input");
-        input.type = "text";
-        input.name = "phones[]";
-        input.placeholder = "Phone Number";
-        return input;
-    }
-
-</script>
+    </script>
 
 </head>
+
 <body>
     <h1>Student Information Form</h1>
     <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
@@ -167,11 +124,11 @@ function getSemester() {
         <input type="text" name="LastName" required>
 
         <label for="Gender">Gender:</label>
-            <select name="Gender" required>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
+        <select name="Gender" required>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
 
-            </select>
+        </select>
 
         <label for="DateOfBirth">Date of Birth:</label>
         <input type="date" name="DateOfBirth" required>
@@ -258,7 +215,7 @@ function getSemester() {
 
         <label for="phones">Phone Numbers:</label>
         <div id="phoneContainer">
-            <input type="text" name="phones[]" placeholder="Phone Number" required >
+            <input type="text" name="phones[]" placeholder="Phone Number" required>
             <label for="connectionTypes[]">Connection Type:</label>
             <select name="connectionTypes[]" required>
                 <option value="self">Self</option>
@@ -273,5 +230,5 @@ function getSemester() {
         <button type="submit">Submit</button>
     </form>
 </body>
-</html>
 
+</html>
