@@ -8,7 +8,7 @@ create table students
     StudentId varchar(20) not null,
     FirstName varchar(30) not null,
     LastName varchar(30) not null,
-    DateOfBirth varchar(255) not null,
+    DateOfBirth date not null,
     RegNo varchar(30), -- from HSC/SSC
     Email varchar(255) not null,
     Batch varchar(20) not null,
@@ -18,6 +18,7 @@ create table students
     Semester varchar(20) not null,
     AdmissionDate varchar(255) not null,
 
+
     MotherName varchar(50) not null,
     FatherName varchar(50) not null,
     FatherOccupation varchar(50) not null,
@@ -25,7 +26,8 @@ create table students
     ParentConnection varchar(50) not null,
 
     PermanentAddress varchar(255) not null,
-    PresentAddress varchar(255) not null
+    PresentAddress varchar(255) not null,
+    Gender varchar(20)
 )
 
 
@@ -45,5 +47,5 @@ create table phone
     Serial int primary key identity(1,1),
     StudentId varchar(20) not null,
     Phone varchar(255) not null,
-    ConnectionType varchar(50) not null -- self/parent etc
+    ConnectionType varchar(50) not null -- self/parent/guardian etc
 )

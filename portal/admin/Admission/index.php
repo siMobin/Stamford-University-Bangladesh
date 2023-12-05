@@ -16,6 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $country = htmlspecialchars($_POST["Country"]);
     $semester = getSemester();
     $admissionDate = (empty($_POST["AdmissionDate"])) ? date("Y-m-d") : $_POST["AdmissionDate"];
+    $gender = htmlspecialchars($_POST["Gender"]);
 
     $motherName = htmlspecialchars($_POST["MotherName"]);
     $fatherName = htmlspecialchars($_POST["FatherName"]);
@@ -27,12 +28,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $presentAddress = htmlspecialchars($_POST["PresentAddress"]);
 
 // Insert data into the students table
-$insertStudentsQuery = "INSERT INTO students (UID, StudentId, FirstName, LastName, DateOfBirth, RegNo, Email, Batch, Department, Program, Country, Semester, AdmissionDate, MotherName, FatherName, FatherOccupation, ParentName, ParentConnection, PermanentAddress, PresentAddress) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+$insertStudentsQuery = "INSERT INTO students (UID, StudentId, FirstName, LastName, DateOfBirth, RegNo, Email, Batch, Department, Program, Country, Semester, AdmissionDate, MotherName, FatherName, FatherOccupation, ParentName, ParentConnection, PermanentAddress, PresentAddress, Gender) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 $params = array(
     $uid, $studentId, $firstName, $lastName, $dateOfBirth, $regNo, $email, $batch, $department, $program,
     $country, $semester, $admissionDate, $motherName, $fatherName, $fatherOccupation, $parentName, $parentConnection,
-    $permanentAddress, $presentAddress
+    $permanentAddress, $presentAddress, $gender
 );
 
 $stmt = sqlsrv_query($conn, $insertStudentsQuery, $params);
@@ -164,6 +165,13 @@ function getSemester() {
 
         <label for="LastName">Last Name:</label>
         <input type="text" name="LastName" required>
+
+        <label for="Gender">Gender:</label>
+            <select name="Gender" required>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+
+            </select>
 
         <label for="DateOfBirth">Date of Birth:</label>
         <input type="date" name="DateOfBirth" required>

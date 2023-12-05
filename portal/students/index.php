@@ -7,6 +7,10 @@ if (!isset($_SESSION["studentId"])) {
     header("Location: ./login/");
     exit;
 }
+else{
+    $studentId = $_SESSION["studentId"];
+    
+}
 ?>
 
 
