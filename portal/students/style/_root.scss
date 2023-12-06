@@ -1,4 +1,8 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css";
+
 $white: white;
+$blue_white: rgb(223, 234, 255);
 $blue_lite: rgb(25, 47, 89);
 $blue: rgb(5, 15, 30);
 
@@ -10,6 +14,8 @@ $sidebar-width: 200px;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
 
     .required {
         &::after {
@@ -17,6 +23,11 @@ $sidebar-width: 200px;
             color: red;
             font-weight: 400;
         }
+    }
+
+    &::placeholder {
+        font-style: italic;
+        font-size: 12px;
     }
 
     .submit {
@@ -36,16 +47,15 @@ $sidebar-width: 200px;
     position: fixed;
     width: $sidebar-width;
     height: 100%;
-    background: #f8f9fa;
+    background: $blue_white;
     overflow-y: auto;
-
 
     .logo {
         width: 100%;
-        padding: 20px 0;
+        padding: 1em 0;
         text-align: center;
-        background: #343a40;
-        color: white;
+        background: $blue_lite;
+        color: $white;
     }
 
     .menu-item {
@@ -54,10 +64,11 @@ $sidebar-width: 200px;
         box-sizing: border-box;
         box-shadow: inset 0 -1px rgba(0, 0, 0, .15);
         cursor: pointer;
+        font-weight: 500;
 
         &.active {
-            background: #007bff;
-            color: white;
+            background: $blue;
+            color: $white;
         }
     }
 }
@@ -66,5 +77,29 @@ main,
 nav,
 header {
     margin-left: $sidebar-width;
-    padding: 20px;
+    padding: .5em 1em;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 -1px 10px rgba(0, 0, 0, 0.2);
+
+    .logout-button {
+        text-align: center;
+        background-color: $blue_lite;
+        color: $white;
+        padding: .5em 1em;
+        cursor: pointer;
+        font-weight: 600;
+        border-radius: 5px;
+        transition: background-color .1s linear;
+
+        &:hover {
+            background-color: $white;
+            color: black;
+            border: 1px solid $blue_lite;
+        }
+    }
 }

@@ -24,9 +24,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Get the corresponding connection type from the form
         $connectionType = $connectionTypes[$index];
 
-        $insertPhoneQuery = "INSERT INTO phone (StudentId, Phone, ConnectionType) VALUES (?, ?, ?)";
-        $paramsPhone = array($studentId, $phone, $connectionType);
-        $stmtPhone = sqlsrv_query($conn, $insertPhoneQuery, $paramsPhone);
+        $UpdatePhoneQuery = "UPDATE phone SET Phone = ?, ConnectionType = ? WHERE StudentID = ?";
+        $paramsPhone = array($phone, $connectionType, $_SESSION["studentId"]);
+        $stmtPhone = sqlsrv_query($conn, $UpdatePhoneQuery, $paramsPhone);
 
         if ($stmtPhone === false) {
             die(print_r(sqlsrv_errors(), true));
@@ -75,9 +75,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $updatesecurityAnswerStmt = sqlsrv_query($conn, $updatesecurityAnswerSql, $updatesecurityAnswerParams);
     }
 
-
-
-
+    header("Location: ../");
+    exit();
 }
 
 if (isset($_SESSION["studentId"])) {
@@ -102,6 +101,24 @@ if (isset($_SESSION["studentId"])) {
     }
 }
 
+if (isset($_SESSION["studentId"])) {
+    $studentId = $_SESSION["studentId"];
+
+    // Query to retrieve existing information based on studentId
+    $sql = "SELECT SecurityQuestion, SecurityAnswer FROM student_login WHERE StudentId = ?";
+    $params = array($studentId);
+    $stmt = sqlsrv_query($conn, $sql, $params);
+
+    // Fetch student information
+    if ($stmt !== false) {
+        $row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC);
+
+        // Assign fetched values to variables
+        $SecurityQuestion = $row['SecurityQuestion'];
+        $SecurityAnswer = $row['SecurityAnswer'];
+    }
+}
+
 sqlsrv_close($conn);
 ?>
 
@@ -111,103 +128,84 @@ sqlsrv_close($conn);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="../images/logo.png">
     <title>Update Information</title>
+
+    <link rel="stylesheet" href="./Update_info.css">
 </head>
-<script>
-    // JavaScript to add and remove phone number input fields
-function addPhoneNumber() {
-    var container = document.getElementById("phoneContainer");
-
-    // Create and append phone number input and connection type dropdown
-    var phoneGroup = createPhoneGroup();
-    container.appendChild(phoneGroup);
-}
-
-function removePhoneNumber() {
-    var container = document.getElementById("phoneContainer");
-    var phoneGroups = container.getElementsByClassName("phone-group");
-
-    // Ensure there is at least one phone number input
-    if (phoneGroups.length >= 1) {
-        container.removeChild(phoneGroups[phoneGroups.length - 1]);
-    }
-}
-
-function createPhoneGroup() {
-    var phoneGroup = document.createElement("div");
-    phoneGroup.className = "phone-group";
-
-    // Create and append phone number input
-    var input = createPhoneNumberInput();
-    phoneGroup.appendChild(input);
-
-    // Create and append connection type dropdown directly in HTML
-    phoneGroup.innerHTML += `
-        <label for="connectionTypes[]">Connection Type:</label>
-        <select name="connectionTypes[]" required>
-            <option value="self">Self</option>
-            <option value="parent">Parent</option>
-            <option value="guardian">Guardian</option>
-        </select>
-    `;
-
-    return phoneGroup;
-}
-
-function createPhoneNumberInput() {
-    var input = document.createElement("input");
-    input.type = "text";
-    input.name = "phones[]";
-    input.placeholder = "Phone Number";
-    return input;
-}
-</script>
 
 <body>
-    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-        <label for="email">Email</label>
-        <input type="email" name="email" required value="<?php echo isset($email) ? $email : ''; ?>"><br>
+    <h1>Update Account Information</h1>
 
-        <label for="phones">New Phone Numbers:</label>
-        <div id="phoneContainer">
-            <input type="text" name="phones[]" placeholder="Phone Number" required>
-            <label for="connectionTypes[]">Connection Type:</label>
-            <select name="connectionTypes[]" required>
-                <option value="self">Self</option>
-                <option value="parent">Parent</option>
-                <option value="guardian">Guardian</option>
-            </select>
-        </div>
+    <div class="container">
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+            <div>
+                <label for="email">Email</label>
+                <input type="email" name="email" required value="<?php echo $email; ?>">
+            </div>
 
-        <button type="button" onclick="addPhoneNumber()">Add More Phones</button>
-        <button type="button" onclick="removePhoneNumber()">Remove Last Phone</button>
+            <div>
+                <label class="required" for="phones">Phone Numbers</label>
+                <span id="phoneContainer">
+                    <input type="text" name="phones[]" placeholder="Phone Number" required>
+                </span>
+            </div>
 
-        <label for="presentAddress">Present Address:</label>
-        <input type="text" name="presentAddress" value="<?php echo isset($presentAddress) ? $presentAddress : ''; ?>"><br>
+            <div>
+                <label for="connectionTypes[]">Connection Type</label>
+                <select name="connectionTypes[]" required>
+                    <option value="self">Self</option>
+                    <option value="parent">Parent</option>
+                    <option value="guardian">Guardian</option>
+                </select>
 
-        <label for="parentName">Guardian Name</label>
-        <input type="text" name="parentName" value="<?php echo isset($parentName) ? $parentName : ''; ?>"><br>
+            </div>
 
-        <label for="parentConnection">Guardian Connection</label>
-        <input type="text" name="parentConnection" value="<?php echo isset($parentConnection) ? $parentConnection : ''; ?>"><br>
 
-        <label for="fatherOccupation">Father's Occupation</label>
-        <input type="text" name="fatherOccupation" value="<?php echo isset($fatherOccupation) ? $fatherOccupation : ''; ?>"><br>
+            <!-- <div> -->
+            <button class="submit" type="button" onclick="addPhoneNumber()">Add More Phones</button>
+            <button class="submit" type="button" onclick="removePhoneNumber()">Remove Last Phone</button>
+            <!-- </div> -->
 
-        <label class="required" for="securityQuestion">Security Question</label>
-                    <select id="securityQuestion" name="securityQuestion" required>
-                        <!-- <option value="">Select a security question</option> -->
-                        <option value="What is your mother's maiden name?">What is your mother's maiden name?</option>
-                        <option value="What is the name of your first pet?">What is the name of your first pet?</option>
-                        <option value="In which city were you born?">In which city were you born?</option>
-                    </select>
+            <div>
+                <label for="presentAddress">Present Address</label>
+                <input type="text" name="presentAddress" value="<?php echo $presentAddress; ?>">
+            </div>
 
-        <label class="required" for="securityAnswer">Security Answer</label>
-         <input type="text" id="securityAnswer" name="securityAnswer" required>            
+            <div>
+                <label for="parentName">Guardian Name</label>
+                <input type="text" name="parentName" value="<?php echo $parentName; ?>">
+            </div>
 
-        <input type="submit" value="Update Information">
-    </form>
+            <div>
+                <label for="parentConnection">Guardian Connection</label>
+                <input type="text" name="parentConnection" value="<?php echo $parentConnection; ?>">
+            </div>
 
+            <div>
+                <label for="fatherOccupation">Father's Occupation</label>
+                <input type="text" name="fatherOccupation" value="<?php echo $fatherOccupation; ?>">
+            </div>
+
+            <div>
+                <label for="securityQuestion">Security Question</label>
+                <select id="securityQuestion" name="securityQuestion" required>
+                    <option value="<?php echo $SecurityQuestion; ?>"><?php echo $SecurityQuestion; ?></option>
+                    <option value="What is your mother's maiden name?">What is your mother's maiden name?</option>
+                    <option value="What is the name of your first pet?">What is the name of your first pet?</option>
+                    <option value="In which city were you born?">In which city were you born?</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="securityAnswer">Security Answer</label>
+                <input type="text" id="securityAnswer" name="securityAnswer" value="<?php echo $SecurityAnswer; ?>" required>
+            </div>
+            <br>
+            <input class="submit submit_main" type="submit" value="Update Information">
+        </form>
+    </div>
+    <script src="../script/Updateinfo.js"></script>
 </body>
 
 </html>

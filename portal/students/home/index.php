@@ -13,17 +13,24 @@ $params = array($studentId);
 
 // Execute the query
 $stmt = sqlsrv_query($conn, $sql, $params);
-
+echo "<section class='body'>";
 // Check if any records are found
 if ($stmt !== false) {
     // Display student information
     while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
-        echo "Student ID: " . $row["StudentId"] . "<br>";
-        echo "First Name: " . $row["FirstName"] . "<br>";
-        echo "Last Name: " . $row["LastName"] . "<br>";
-        echo "Date of Birth: " . $row["DateOfBirth"]->format('Y-m-d') . "<br>";
-        echo "Registration Number: " . $row["RegNo"] . "<br>";
-        echo "Email: " . $row["Email"] . "<br>";
+        echo "<div class='student-info'>";
+        echo "<div><p>Student ID:</p><p>" . $row["StudentId"] . "</p></div>";
+        echo "<div><p>Name:</p><p>" . $row["FirstName"] . " " . $row["LastName"] . "</p></div>";
+        // echo "<div><p>Last Name:</p><p>" . $row["LastName"] . "</p></div>";
+        echo "<div><p>Batch:</p><p>" . $row["Batch"] . "</p></div>";
+        echo "<div><p>Department:</p><p>" . $row["Department"] . "</p></div>";
+        echo "<div><p>Program:</p><p>" . $row["Program"] . "</p></div>";
+        echo '<br>';
+        // echo '<br>';
+        echo "<div><p>Date of Birth:</p><p>" . $row["DateOfBirth"]->format('Y-m-d') . "</p></div>";
+        echo "<div><p>Registration Number:</p><p>" . $row["RegNo"] . "</p></div>";
+        echo "<div><p>Email:</p><p>" . $row["Email"] . "</p></div>";
+
         // Retrieve phone numbers for the student
         $phoneSql = "SELECT Phone FROM phone WHERE StudentId = ?";
         $phoneParams = array($studentId);
@@ -36,31 +43,63 @@ if ($stmt !== false) {
                 $phoneNumbers[] = $phoneRow["Phone"];
             }
             // Display phone numbers separated by commas
-            echo "Phone Numbers: " . implode(", ", $phoneNumbers) . "<br>";
+            echo "<div><p>Phone Numbers:</p><p>" . implode(", ", $phoneNumbers) . "</p></div>";
         } else {
-            echo "Error retrieving phone numbers: " . print_r(sqlsrv_errors(), true) . "<br>";
+            echo "<div><p>Error retrieving phone numbers:</p><p>" . print_r(sqlsrv_errors(), true) . "</p></div>";
         }
-        echo "Batch: " . $row["Batch"] . "<br>";
-        echo "Department: " . $row["Department"] . "<br>";
-        echo "Program: " . $row["Program"] . "<br>";
-        echo "Country: " . $row["Country"] . "<br>";
-        echo "Semester: " . $row["Semester"] . "<br>";
-        echo "Admission Date: " . $row["AdmissionDate"] . "<br>";
-        echo "Mother's Name: " . $row["MotherName"] . "<br>";
-        echo "Father's Name: " . $row["FatherName"] . "<br>";
-        echo "Father's Occupation: " . $row["FatherOccupation"] . "<br>";
-        echo "Parent's Name: " . $row["ParentName"] . "<br>";
-        echo "Parent's Connection: " . $row["ParentConnection"] . "<br>";
-        echo "Gender: " . $row["Gender"] . "<br>";
-        echo "Permanent Address: " . $row["PermanentAddress"] . "<br>";
-        echo "Present Address: " . $row["PresentAddress"] . "<br>";
+
+
+        echo "<div><p>Country:</p><p>" . $row["Country"] . "</p></div>";
+        echo "<div><p>Semester:</p><p>" . $row["Semester"] . "</p></div>";
+        echo "<div><p>Admission Date:</p><p>" . $row["AdmissionDate"] . "</p></div>";
+        echo '<br>';
+        // echo '<br>';
+        echo "<div><p>Mother's Name:</p><p>" . $row["MotherName"] . "</p></div>";
+        echo "<div><p>Father's Name:</p><p>" . $row["FatherName"] . "</p></div>";
+        echo "<div><p>Father's Occupation:</p><p>" . $row["FatherOccupation"] . "</p></div>";
+        echo "<div><p>Parent's Name:</p><p>" . $row["ParentName"] . "</p></div>";
+        echo "<div><p>Parent's Connection:</p><p>" . $row["ParentConnection"] . "</p></div>";
+        echo "<div><p>Gender:</p><p>" . $row["Gender"] . "</p></div>";
+        echo "<div><p>Permanent Address:</p><p>" . $row["PermanentAddress"] . "</p></div>";
+        echo "<div><p>Present Address:</p><p>" . $row["PresentAddress"] . "</p></div>";
+        echo '<br>';
+        echo '<br>';
+        echo "<a class='submit' href='./update_info/$studentId'>Update Info</a>";
+        echo '</div>';
     }
 } else {
     echo "Error executing query: " . print_r(sqlsrv_errors(), true);
 }
-echo "<a class='submit' href='./update_info/$studentId'>Update</a>"
 
 // Close the database connection
-// sqlsrv_close($conn);
+sqlsrv_close($conn);
 ?>
-<!--  -->
+
+<div class="notice">
+    <h1>NOTICE BOARD</h1>
+    <div class="box">notice</div>
+    <div class="box">notice</div>
+</div>
+</section>
+
+<section class="contact">
+    <div class="card">
+        <div class="card-content">
+            <h2>Contact for Course Registration</h2>
+            <p class="name"><i class="fas fa-user"></i>Abu Rasel</p>
+            <p class="title"><i class="fas fa-briefcase"></i>Executive</p>
+            <p class="phone"><i class="fas fa-phone"></i>+8801715125313</p>
+            <p class="email"><i class="fas fa-envelope"></i>aburase1@stamford.university</p>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-content">
+            <h2>Contact for Readmission / Self-Study</h2>
+            <p class="name"><i class="fas fa-user"></i>Mohd. Nural Alam</p>
+            <p class="title"><i class="fas fa-briefcase"></i>Asst. Registrar</p>
+            <p class="phone"><i class="fas fa-phone"></i>+8801670096935</p>
+            <p class="email"><i class="fas fa-envelope"></i>mnalam09@stamford.university</p>
+        </div>
+    </div>
+
+</section>
