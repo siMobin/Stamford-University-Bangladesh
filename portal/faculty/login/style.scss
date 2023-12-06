@@ -1,0 +1,56 @@
+@use '../style/root' as *;
+
+section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    // align-items: center;
+    gap: 3em;
+    margin: 2em;
+
+    h2 {
+        font-size: 20px;
+        margin-bottom: 2em;
+    }
+
+    img {
+        width: 500px;
+        max-width: 100vw;
+        object-fit: cover;
+    }
+
+    .form {
+        .title {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            img {
+                width: 100px;
+            }
+        }
+
+        form {
+            div {
+                font-weight: 600;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 2em;
+                margin-bottom: 1em;
+
+                input {
+                    padding: .2em .5em;
+                }
+            }
+
+            span {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding-top: 1em;
+            }
+
+        }
+    }
+}
