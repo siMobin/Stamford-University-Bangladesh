@@ -1,0 +1,40 @@
+@use '../style/root' as *;
+
+h1 {
+    font-size: 20px;
+    text-align: center;
+    margin: 1em 0;
+    text-decoration: underline;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    form {
+        width: max-content;
+
+        div {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2em;
+            align-items: center;
+            margin: .5em 0;
+
+            .submit {
+                width: max-content;
+                align-items: right;
+            }
+
+            input {
+                padding: .3em .2em;
+                width: 100%;
+            }
+
+            label {
+                text-align: right;
+            }
+        }
+    }
+}
