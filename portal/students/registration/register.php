@@ -1,5 +1,5 @@
 <?php
-require_once('../conn.php');
+require_once('../../../conn.php');
 session_start();
 
 // Retrieve data from the registration form

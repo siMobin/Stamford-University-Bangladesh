@@ -29,5 +29,7 @@ FAQ.*
 # Not ignored
 !main/header_slider/assets/index.css
 
-#Connection info that's different for everyone
-main/conn.php
+# For security reasons, we cannot upload this to GitHub.
+# Please create a conn.php file in the **root** directory
+#of the project.
+conn.php
