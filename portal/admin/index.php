@@ -10,7 +10,7 @@
 
 <body>
     <div id="sidebar">
-        <div class="logo"><img src="./images/logo.png" alt=""></div>
+        <div class="logo"><img src="./images/logo_medium.png" alt=""></div>
         <div class="menu-item active" data-page="home">Page 1</div>
         <div class="menu-item" data-page="admissionoffline">Offline Admission</div>
         <div class="menu-item" data-page="p3">Page 3</div>
