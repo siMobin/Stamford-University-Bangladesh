@@ -66,4 +66,4 @@ if (isset($_SESSION["FacultyId"])) {
     ?>
 </body>
 
-</html>/*
+</html>

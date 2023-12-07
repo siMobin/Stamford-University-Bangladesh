@@ -1,5 +1,5 @@
 <?php
-require_once('conn.php');
+require_once('../../../conn.php');
 session_start();
 
 // Check if the user is logged in
