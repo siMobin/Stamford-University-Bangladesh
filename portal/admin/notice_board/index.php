@@ -3,13 +3,15 @@
 // ini_set('upload_max_filesize', '20M'); // Set maximum upload file size to 20 megabytes
 // ini_set('post_max_size', '20M');        // Set maximum POST data size to 20 megabytes
 
-require_once('../../../tempconn.php');
+require_once('../../../conn.php');
 date_default_timezone_set('Asia/Dhaka');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $title = $_POST['title'];
-    $content = $_POST['content'];
+    // $title = $_POST['title'];
+    $title = htmlspecialchars($_POST["title"]);
+    // $content = $_POST['content'];
+    $content = htmlspecialchars($_POST["content"]);
     $timestamp = date('Y-m-d-H-i-s');
 
     // Process file upload if a file is provided
@@ -55,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             move_uploaded_file($_FILES['file']['tmp_name'], $filePath);
 
             // Insert data into the notice_board table
-            $timestampFormatted = date('Y-m-d H:i:s', strtotime($timestampString));
+
             $sql = "INSERT INTO notice_board (timeStamp, title, content, fileName, filePath, fileType)
                     VALUES ('$timestamp', '$title', '$content', '$fileName', '$filePath', '$fileType')";
 
@@ -63,14 +65,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($queryResult === false) {
                 die(print_r(sqlsrv_errors(), true));
             }
-
-            echo "File uploaded successfully!";
+            // echo "File uploaded successfully!";
+            header("Location: ../../../portal/admin/");
         } else {
             echo "Unsupported file type or error during upload.";
         }
-
     } else {
-        $timestampFormatted = date('Y-m-d H:i:s', strtotime($timestampString));
         $sql = "INSERT INTO notice_board (timeStamp, title, content, fileName, filePath, fileType)
                 VALUES ('$timestamp', '$title', '$content', NULL, NULL, NULL)";
 
@@ -78,31 +78,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($queryResult === false) {
             die(print_r(sqlsrv_errors(), true));
         }
+        // echo "File uploaded successfully!";
+        header("Location: ../../../portal/admin/");
     }
 }
 ?>
 
+<div class="main_notice">
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>File Upload Form</title>
-</head>
-<body>
-    <h2>File Upload Form</h2>
-    <form action="" method="post" enctype="multipart/form-data">
-        <label for="title">Title:</label>
-        <input type="text" name="title" required><br>
+    <section>
 
-        <label for="content">Content:</label>
-        <textarea name="content" required></textarea><br>
+        <form action=" <?php echo $_SERVER['PHP_SELF']; ?> " method="post" enctype="multipart/form-data">
+            <h2>Publish Global Notice</h2>
+            <div>
+                <label class="required" for="title">Title</label>
+                <input type="text" name="title" required>
+            </div>
 
-        <label for="file">Choose File (20 MB max):</label>
-        <input type="file" name="file" accept=".pdf, .jpg, .png, .webp, .gif, .mp4, .webm, .mov"><br>
+            <div>
+                <label for="content">Content</label>
+                <textarea name="content" rows="3"></textarea>
+            </div>
 
-        <button type="submit">Upload File</button>
-    </form>
-</body>
-</html>
+            <div>
+                <label for="file">Choose File (20 MB max)</label>
+                <input type="file" name="file" accept=".pdf, .jpg, .png, .webp, .gif, .mp4, .webm, .mov">
+            </div>
+
+            <button class="submit" type="submit">Publish Notice</button>
+        </form>
+    </section>
+
+    <section>
+
+        <div class="notice">
+            <h1>NOTICE BOARD</h1>
+            <div id="notice_body">
+                <?php
+                require('../../../conn.php');
+                require_once('./notice_board.php');
+                ?>
+            </div>
+        </div>
+    </section>
+</div>

@@ -17,6 +17,10 @@ $sidebar-width: 200px;
     font-family: "Poppins", sans-serif;
     font-size: 14px;
 
+    p {
+        text-align: justify;
+    }
+
     .required {
         &::after {
             content: "*";
