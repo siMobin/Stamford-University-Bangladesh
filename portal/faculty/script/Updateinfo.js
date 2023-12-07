@@ -26,15 +26,7 @@ function createPhoneGroup() {
     phoneGroup.appendChild(input);
 
     // Create and append connection type dropdown directly in HTML
-    phoneGroup.innerHTML += `
-        <label for="connectionTypes[]">Connection Type:</label>
-        <select name="connectionTypes[]" required>
-            <option value="self">Self</option>
-            <option value="parent">Parent</option>
-            <option value="guardian">Guardian</option>
-        </select>
-    `;
-
+    
     return phoneGroup;
 }
 
