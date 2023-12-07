@@ -61,7 +61,7 @@ if (isset($_GET['logout'])) {
         <div class="logo"><img src="./images/logo_medium.png" alt=""></div>
         <div class="menu-item active" data-page="home">Home</div>
         <div class="menu-item" data-page="p2">Page 2</div>
-        <div class="menu-item" data-page="p3">Page 3</div>
+        <!-- <div class="menu-item" data-page="notice_board">Notice</div> -->
         <!-- <div class="menu-item" data-page="p4">Page 4</div> -->
 
         <!-- More menu items... -->

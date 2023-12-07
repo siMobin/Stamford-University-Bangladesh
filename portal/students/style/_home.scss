@@ -29,7 +29,8 @@
     .notice {
         border: 1px dotted $blue_lite;
         border-radius: 10px;
-        overflow-y: scroll;
+        // overflow-y: scroll;
+        overflow: hidden;
 
         h1 {
             color: rgba($white, 1);
@@ -38,9 +39,9 @@
             font-size: 20px;
         }
 
-        .box {
-            margin: 1em;
-        }
+        // .box {
+        //     margin: 1em;
+        // }
     }
 }
 

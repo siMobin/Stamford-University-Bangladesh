@@ -77,8 +77,12 @@ sqlsrv_close($conn);
 
 <div class="notice">
     <h1>NOTICE BOARD</h1>
-    <div class="box">notice</div>
-    <div class="box">notice</div>
+    <div id="notice_body">
+        <?php
+        require('../../../conn.php');
+        require_once('./notice_board.php');
+        ?>
+    </div>
 </div>
 </section>
 
