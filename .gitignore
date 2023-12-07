@@ -33,3 +33,8 @@ FAQ.*
 # Please create a conn.php file in the **root** directory
 #of the project.
 conn.php
+
+#Storage folders and subfolders
+Storage/image
+Storage/pdf
+Storage/video
