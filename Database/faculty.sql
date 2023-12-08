@@ -35,4 +35,3 @@ create table Faculty_phone
     FacultyId varchar(20) not null,
     Phone varchar(255) not null,
 )
-

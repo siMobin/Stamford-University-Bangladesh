@@ -69,13 +69,36 @@ if ($stmt !== false) {
 sqlsrv_close($conn);
 ?>
 
+
 <div class="notice">
     <h1>NOTICE BOARD</h1>
-    <div class="box">notice</div>
-    <div class="box">notice</div>
+    <div id="notice_body">
+        <?php
+        require('../../../conn.php');
+        require_once('./notice_board.php');
+        ?>
+    </div>
 </div>
 </section>
 
-
+<section class="contact">
+    <div class="card">
+        <div class="card-content">
+            <h2>Contact for Course Registration</h2>
+            <p class="name"><i class="fas fa-user"></i>Abu Rasel</p>
+            <p class="title"><i class="fas fa-briefcase"></i>Executive</p>
+            <p class="phone"><i class="fas fa-phone"></i>+8801715125313</p>
+            <p class="email"><i class="fas fa-envelope"></i>aburase1@stamford.university</p>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-content">
+            <h2>Contact for Readmission / Self-Study</h2>
+            <p class="name"><i class="fas fa-user"></i>Mohd. Nural Alam</p>
+            <p class="title"><i class="fas fa-briefcase"></i>Asst. Registrar</p>
+            <p class="phone"><i class="fas fa-phone"></i>+8801670096935</p>
+            <p class="email"><i class="fas fa-envelope"></i>mnalam09@stamford.university</p>
+        </div>
+    </div>
 
 </section>
