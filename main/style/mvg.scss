@@ -1,0 +1,55 @@
+@use 'root' as *;
+@import 'nav';
+@import 'footer';
+
+#about {
+    .container {
+        margin: 1em;
+
+        .title {
+            strong {
+                font-size: 24px;
+            }
+        }
+
+        h5 {
+            font-size: 16px;
+            color: $blue_lite;
+            margin: 1em;
+        }
+
+        .box {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(300px, 1fr));
+            gap: 1em;
+            overflow: hidden;
+            grid-row: auto;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                margin: 1em;
+            }
+
+            p {
+                display: flex;
+                align-items: center;
+
+                i {
+                    padding: .5em;
+                    font-size: 40px;
+                    color: $blue_lite;
+                }
+            }
+        }
+
+        #mission_div {
+            p {
+                i {
+                    font-size: 20px;
+                }
+            }
+        }
+    }
+}

@@ -12,6 +12,14 @@
     </section>
 
     <section class="main">
+        <div class="dropdown">
+            <a href="#">About Us</a>
+            <div class="dropdown-content">
+                <a href="./mvg/">Mission, Vision and Goals</a>
+                <a href="#">Dropdown Item B</a>
+                <a href="#">Dropdown Item C</a>
+            </div>
+        </div>
         <a href="#">avbryry</a>
         <a href="#">avbryry</a>
         <div class="dropdown">
