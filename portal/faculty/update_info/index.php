@@ -4,28 +4,27 @@ session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Check if the user is logged in
-    if (isset($_SESSION["studentId"])) {
-        $studentId = $_SESSION["studentId"];
+    if (isset($_SESSION["FacultyId"])) {
+        $studentId = $_SESSION["FacultyId"];
     }
 
-    if (isset($_POST["email"])) {
-        $email = $_POST["email"];
-        $updateEmailSql = "UPDATE students SET Email = ? WHERE StudentId = ?";
-        $updateEmailParams = array($email, $_SESSION["studentId"]);
+    if (isset($_POST["Email"])) {
+        $email = $_POST["Email"];
+        $updateEmailSql = "UPDATE Faculty SET Email = ? WHERE FacultyId = ?";
+        $updateEmailParams = array($Email, $_SESSION["FacultyId"]);
         $updateEmailStmt = sqlsrv_query($conn, $updateEmailSql, $updateEmailParams);
-        $updateEmailSql = "UPDATE student_login SET Email = ? WHERE StudentId = ?";
+        $updateEmailSql = "UPDATE Faculty_login SET Email = ? WHERE FacultyId = ?";
         $updateEmailStmt = sqlsrv_query($conn, $updateEmailSql, $updateEmailParams);
     }
 
     $phones = $_POST["phones"];
-    $connectionTypes = $_POST["connectionTypes"];
-
+  
     foreach ($phones as $index => $phone) {
         // Get the corresponding connection type from the form
-        $connectionType = $connectionTypes[$index];
+       
 
-        $UpdatePhoneQuery = "UPDATE phone SET Phone = ?, ConnectionType = ? WHERE StudentID = ?";
-        $paramsPhone = array($phone, $connectionType, $_SESSION["studentId"]);
+        $UpdatePhoneQuery = "UPDATE Faculty_phone SET Phone = ? WHERE Facultyid = ?";
+        $paramsPhone = array($phone, $_SESSION["FacultyId"]);
         $stmtPhone = sqlsrv_query($conn, $UpdatePhoneQuery, $paramsPhone);
 
         if ($stmtPhone === false) {
@@ -35,43 +34,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (isset($_POST["presentAddress"])) {
         $presentAddress = $_POST["presentAddress"];
-        $updatePresentAddressSql = "UPDATE students SET PresentAddress = ? WHERE StudentId = ?";
-        $updatePresentAddressParams = array($presentAddress, $_SESSION["studentId"]);
+        $updatePresentAddressSql = "UPDATE Faculty SET PresentAddress = ? WHERE FacultyId = ?";
+        $updatePresentAddressParams = array($presentAddress, $_SESSION["FacultyId"]);
         $updatePresentAddressStmt = sqlsrv_query($conn, $updatePresentAddressSql, $updatePresentAddressParams);
     }
 
-    if (isset($_POST["parentName"])) {
-        $parentName = $_POST["parentName"];
-        $updateParentNameSql = "UPDATE students SET ParentName = ? WHERE StudentId = ?";
-        $updateParentNameParams = array($parentName, $_SESSION["studentId"]);
-        $updateParentNameStmt = sqlsrv_query($conn, $updateParentNameSql, $updateParentNameParams);
-    }
 
-    if (isset($_POST["parentConnection"])) {
-        $parentConnection = $_POST["parentConnection"];
-        $updateParentConnectionSql = "UPDATE students SET ParentConnection = ? WHERE StudentId = ?";
-        $updateParentConnectionParams = array($parentConnection, $_SESSION["studentId"]);
-        $updateParentConnectionStmt = sqlsrv_query($conn, $updateParentConnectionSql, $updateParentConnectionParams);
-    }
 
-    if (isset($_POST["fatherOccupation"])) {
-        $fatherOccupation = $_POST["fatherOccupation"];
-        $updateFatherOccupationSql = "UPDATE students SET FatherOccupation = ? WHERE StudentId = ?";
-        $updateFatherOccupationParams = array($fatherOccupation, $_SESSION["studentId"]);
-        $updateFatherOccupationStmt = sqlsrv_query($conn, $updateFatherOccupationSql, $updateFatherOccupationParams);
-    }
+   
 
-    if (isset($_POST["securityQuestion"])) {
-        $securityQuestion = $_POST["securityQuestion"];
-        $updatesecurityQuestionSql = "UPDATE student_login SET securityQuestion = ? WHERE StudentId = ?";
-        $updatesecurityQuestionParams = array($securityQuestion, $_SESSION["studentId"]);
+   
+
+    if (isset($_POST["SecurityQuestion"])) {
+        $securityQuestion = $_POST["SecurityQuestion"];
+        $updatesecurityQuestionSql = "UPDATE Faculty_login SET SecurityQuestion = ? WHERE FacultyId = ?";
+        $updatesecurityQuestionParams = array($SecurityQuestion, $_SESSION["FacultyId"]);
         $updatesecurityQuestionStmt = sqlsrv_query($conn, $updatesecurityQuestionSql, $updatesecurityQuestionParams);
     }
 
-    if (isset($_POST["securityAnswer"])) {
-        $securityAnswer = $_POST["securityAnswer"];
-        $updatesecurityAnswerSql = "UPDATE student_login SET securityAnswer = ? WHERE StudentId = ?";
-        $updatesecurityAnswerParams = array($securityAnswer, $_SESSION["studentId"]);
+    if (isset($_POST["SecurityAnswer"])) {
+        $securityAnswer = $_POST["SecurityAnswer"];
+        $updatesecurityAnswerSql = "UPDATE Faculty_login SET SecurityAnswer = ? WHERE FacultyId = ?";
+        $updatesecurityAnswerParams = array($securityAnswer, $_SESSION["FacultyId"]);
         $updatesecurityAnswerStmt = sqlsrv_query($conn, $updatesecurityAnswerSql, $updatesecurityAnswerParams);
     }
 
@@ -79,15 +63,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     exit();
 }
 
-if (isset($_SESSION["studentId"])) {
-    $studentId = $_SESSION["studentId"];
+if (isset($_SESSION["FacultyId"])) {
+    $FacultyId = $_SESSION["FacultyId"];
 
-    // Query to retrieve existing information based on studentId
-    $sql = "SELECT * FROM students WHERE StudentId = ?";
-    $params = array($studentId);
+    // Query to retrieve existing information based on FacultyId
+    $sql = "SELECT * FROM Faculty WHERE FacultyId = ?";
+    $params = array($FacultyId);
     $stmt = sqlsrv_query($conn, $sql, $params);
 
-    // Fetch student information
+    // Fetch Faculty information
     if ($stmt !== false) {
         $row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC);
 
@@ -95,21 +79,19 @@ if (isset($_SESSION["studentId"])) {
         $email = $row['Email'];
         $presentAddress = $row['PresentAddress'];
         $permanentAddress = $row['PermanentAddress'];
-        $parentName = $row['ParentName'];
-        $parentConnection = $row['ParentConnection'];
-        $fatherOccupation = $row['FatherOccupation'];
+        
     }
 }
 
-if (isset($_SESSION["studentId"])) {
-    $studentId = $_SESSION["studentId"];
+if (isset($_SESSION["FacultyId"])) {
+    $FacultyId = $_SESSION["FacultyId"];
 
-    // Query to retrieve existing information based on studentId
-    $sql = "SELECT SecurityQuestion, SecurityAnswer FROM student_login WHERE StudentId = ?";
-    $params = array($studentId);
+    // Query to retrieve existing information based on FacultyId
+    $sql = "SELECT SecurityQuestion, SecurityAnswer FROM Faculty_login WHERE FacultyId = ?";
+    $params = array($FacultyId);
     $stmt = sqlsrv_query($conn, $sql, $params);
 
-    // Fetch student information
+    // Fetch Faculty information
     if ($stmt !== false) {
         $row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC);
 
@@ -151,15 +133,7 @@ sqlsrv_close($conn);
                 </span>
             </div>
 
-            <div>
-                <label for="connectionTypes[]">Connection Type</label>
-                <select name="connectionTypes[]" required>
-                    <option value="self">Self</option>
-                    <option value="parent">Parent</option>
-                    <option value="guardian">Guardian</option>
-                </select>
-
-            </div>
+          
 
 
             <!-- <div> -->
@@ -172,20 +146,11 @@ sqlsrv_close($conn);
                 <input type="text" name="presentAddress" value="<?php echo $presentAddress; ?>">
             </div>
 
-            <div>
-                <label for="parentName">Guardian Name</label>
-                <input type="text" name="parentName" value="<?php echo $parentName; ?>">
-            </div>
+            
 
-            <div>
-                <label for="parentConnection">Guardian Connection</label>
-                <input type="text" name="parentConnection" value="<?php echo $parentConnection; ?>">
-            </div>
+            
 
-            <div>
-                <label for="fatherOccupation">Father's Occupation</label>
-                <input type="text" name="fatherOccupation" value="<?php echo $fatherOccupation; ?>">
-            </div>
+            
 
             <div>
                 <label for="securityQuestion">Security Question</label>

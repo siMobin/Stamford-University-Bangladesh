@@ -1,10 +1,10 @@
 <?php
 session_start();
 
-if (isset($_SESSION["studentId"])) {
-    $studentId = $_SESSION["studentId"];
+if (isset($_SESSION["FacultyId"])) {
+    $studentId = $_SESSION["FacultyId"];
     // User is logged in, redirect to the home page
-    header("Location: ../$studentId");
+    header("Location: ../$FacultyId");
     exit;
 }
 ?>
@@ -16,7 +16,7 @@ if (isset($_SESSION["studentId"])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style.css">
-    <title>Student Registration</title>
+    <title>Faculty Registration</title>
 </head>
 
 <body>
@@ -31,33 +31,30 @@ if (isset($_SESSION["studentId"])) {
             <form action="register.php" method="post">
 
                 <div>
-                    <label class="required" for="studentId">Student ID</label>
-                    <input type="text" id="studentId" name="studentId" required placeholder="CSE12345678">
+                    <label class="required" for="FacultyId">Faculty ID</label>
+                    <input type="text" id="FacultyId" name="FacultyId" required placeholder="CSE12345678">
+                </div>
+
+                
+
+                <div>
+                    <label class="required" for="Department">Department</label>
+                    <input type="text" id="Department" name="Department" required placeholder="CSE">
                 </div>
 
                 <div>
-                    <label class="required" for="batch">Batch</label>
-                    <input type="text" id="batch" name="batch" required placeholder="78X">
+                    <label class="required" for="Email">Email</label>
+                    <input type="email" id="Email" name="Email" required placeholder="you@gmail.com">
                 </div>
 
                 <div>
-                    <label class="required" for="department">Department</label>
-                    <input type="text" id="department" name="department" required placeholder="CSE">
+                    <label class="required" for="Password">Password</label>
+                    <input type="password" id="Password" name="Password" required placeholder="password">
                 </div>
 
                 <div>
-                    <label class="required" for="email">Email</label>
-                    <input type="email" id="email" name="email" required placeholder="you@gmail.com">
-                </div>
-
-                <div>
-                    <label class="required" for="password">Password</label>
-                    <input type="password" id="password" name="password" required placeholder="password">
-                </div>
-
-                <div>
-                    <label class="required" for="securityQuestion">Security Question</label>
-                    <select id="securityQuestion" name="securityQuestion" required>
+                    <label class="required" for="SecurityQuestion">Security Question</label>
+                    <select id="SecurityQuestion" name="SecurityQuestion" required>
                         <!-- <option value="">Select a security question</option> -->
                         <option value="What is your mother's maiden name?">What is your mother's maiden name?</option>
                         <option value="What is the name of your first pet?">What is the name of your first pet?</option>
@@ -66,8 +63,8 @@ if (isset($_SESSION["studentId"])) {
                 </div>
 
                 <div>
-                    <label class="required" for="securityAnswer">Security Answer</label>
-                    <input type="text" id="securityAnswer" name="securityAnswer" required>
+                    <label class="required" for="SecurityAnswer">Security Answer</label>
+                    <input type="text" id="SecurityAnswer" name="SecurityAnswer" required>
                 </div>
 
                 <input class="submit" type="submit" value="Register">
@@ -77,7 +74,7 @@ if (isset($_SESSION["studentId"])) {
                 </span>
             </form>
         </div>
-        <img src="https://images.pexels.com/photos/1438081/pexels-photo-1438081.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" loading="lazy">
+        <img src="https://www.interfolio.com/wp-content/uploads/Blog-facultyservice.jpg" alt="" loading="lazy">
     </section>
 
 </body>

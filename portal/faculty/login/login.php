@@ -3,14 +3,14 @@ require_once('../../../conn.php');
 session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $studentId = $_POST['studentId'];
-    $batch = $_POST['batch'];
-    $department = $_POST['department'];
-    $password = $_POST['password'];
+    $FacultyId = $_POST['FacultyId'];
+    $Email = $_POST['Email'];
+    $Department = $_POST['Department'];
+    $Password = $_POST['Password'];
 
     // Retrieve the stored password for the given credentials
-    $query = "SELECT Password FROM student_login WHERE StudentId = ? AND Batch = ? AND Department = ?";
-    $params = array($studentId, $batch, $department);
+    $query = "SELECT Password FROM Faculty_login WHERE FacultyId = ? AND Email = ? AND Department = ?";
+    $params = array($FacultyId, $Email, $Department);
     $options = array("Scrollable" => SQLSRV_CURSOR_KEYSET);
     $stmt = sqlsrv_query($conn, $query, $params, $options);
 
@@ -24,16 +24,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $storedPassword = $row['Password'];
 
         // Password comparison
-        if (password_verify($password, $storedPassword)) {
+        if (password_verify($Password, $storedPassword)) {
             // Passwords match, proceed with login
-            $_SESSION['studentId'] = $studentId;
-            header("Location: ../$studentId");
+            $_SESSION['FacultyId'] = $FacultyId;
+            header("Location: ../$FacultyId");
             exit();
         } else {
             echo "Incorrect password. Please try again.";
         }
     } else {
-        echo "Invalid credentials. Please check your Student ID, Batch, and Department.";
+        echo "Invalid credentials. Please check your Faculty ID, Email, and Department.";
     }
 }
 

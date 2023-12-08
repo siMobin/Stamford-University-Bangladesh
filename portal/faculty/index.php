@@ -1,27 +1,27 @@
 <?php
 session_start();
 
-if (!isset($_SESSION["studentId"])) {
+if (!isset($_SESSION["FacultyId"])) {
     // User isn't logged in, redirect to the login page
     header("Location: ./login/");
     exit;
 } else {
-    $studentId = $_SESSION["studentId"];
+    $FacultyId = $_SESSION["FacultyId"];
 }
 
 date_default_timezone_set('Asia/Dhaka'); // Set the timezone to Bangladesh
 
 require_once('../../conn.php');
 
-$sql = "SELECT * FROM students WHERE StudentId = ?";
-$params = array($studentId);
+$sql = "SELECT * FROM Faculty WHERE FacultyId = ?";
+$params = array($FacultyId);
 
 // Execute the query
 $stmt = sqlsrv_query($conn, $sql, $params);
 echo "<section class='body'>";
 // Check if any records are found
 if ($stmt !== false) {
-    // Display student information
+    // Display Faculty information
     while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
         $name = $row["LastName"];
     }
@@ -52,7 +52,7 @@ if (isset($_GET['logout'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="./images/logo.png">
-    <title>SUB-Student Portal</title>
+    <title>SUB-Faculty Portal</title>
     <link rel="stylesheet" href="./style/index.css">
 </head>
 
