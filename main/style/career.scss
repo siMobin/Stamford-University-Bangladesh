@@ -1,0 +1,38 @@
+@use 'root' as *;
+@import 'nav';
+@import 'footer';
+
+
+.table_container {
+    display: flex;
+    justify-content: center;
+    margin: 1em;
+
+    table,
+    th,
+    td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+
+    th {
+        padding: .5em;
+    }
+
+    td {
+        padding: .5em 1em;
+
+        &:has(i) {
+            text-align: center;
+
+            i {
+                font-size: 20px;
+            }
+        }
+    }
+}
+
+.image_wrapper {
+    display: flex;
+    justify-content: center;
+}

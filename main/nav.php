@@ -6,7 +6,7 @@
 
         <div>
             <a href="#">avbryry</a>
-            <a href="#">avbryry</a>
+            <a href="./career/">Career</a>
             <a href="#">avbryry</a>
         </div>
     </section>
