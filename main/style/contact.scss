@@ -1,38 +1,43 @@
+@use 'root' as *;
+@import 'nav';
+@import 'footer';
 
 .main-content {
-    padding: 20px;
-}
-
-.content-container {
+    padding: 1em;
     display: flex;
-    flex-wrap: wrap; /* Allow items to wrap to the next line */
-    gap: 20px; /* Set the gap between items */
-}
+    flex-wrap: wrap;
+    gap: 1em;
 
-.card-box {
-    width: calc(48% - 10px); /* Adjusted width with reduced margin */
-    flex: 1; /* Allow items to grow and take equal space */
-    padding: 20px;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 10px;
-}
+    .card-box {
+        flex: 1;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 10px;
+    }
 
-.section-title {
-    background-color: $primary-color;
-    color: white;
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-weight: bold;
-    font-size: 1em;
-    display: inline-block;
-    margin-left: 10px;
+    .section-title {
+        background-color: $blue_lite;
+        color: $white;
+        padding: .5em 1em;
+        border-radius: 5px;
+        font-size: 20px;
+        text-align: center;
+        margin-bottom: 1em;
+    }
 }
 
 .maps-section {
     display: flex;
-    gap: 20px;
-    padding: 10px 20px;
-    background-color: #0daad1;
+    justify-content: space-evenly;
+    gap: 1em;
+    padding: 1em;
+    background-color: $blue_lite;
+    height: 400px;
+
+    iframe {
+        border-radius: 5px;
+        width: 100%;
+        height: 100%;
+    }
 }

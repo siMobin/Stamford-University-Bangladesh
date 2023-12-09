@@ -16,8 +16,8 @@
             <a href="#">About Us</a>
             <div class="dropdown-content">
                 <a href="./mvg/">Mission, Vision and Goals</a>
-                <a href="#">Dropdown Item B</a>
-                <a href="#">Dropdown Item C</a>
+                <a href="./genralinformation/">General Information</a>
+                <a href="./contact/">Contact</a>
             </div>
         </div>
         <a href="#">avbryry</a>
