@@ -11,7 +11,7 @@ if (!isset($_SESSION["FacultyId"])) {
 
 date_default_timezone_set('Asia/Dhaka'); // Set the timezone to Bangladesh
 
-require_once('../../conn.php');
+require('../../conn.php');
 
 $sql = "SELECT * FROM Faculty WHERE FacultyId = ?";
 $params = array($FacultyId);

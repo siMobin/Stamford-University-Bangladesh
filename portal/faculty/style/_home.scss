@@ -3,7 +3,7 @@
     grid-template-columns: 1fr 1fr;
     gap: 2em;
 
-    .student-info {
+    .faculty_info {
         div {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -29,7 +29,8 @@
     .notice {
         border: 1px dotted $blue_lite;
         border-radius: 10px;
-        overflow-y: scroll;
+        // overflow-y: scroll;
+        overflow: hidden;
 
         h1 {
             color: rgba($white, 1);
@@ -37,43 +38,39 @@
             text-align: center;
             font-size: 20px;
         }
-
-        .box {
-            margin: 1em;
-        }
     }
 }
 
-.contact {
-    display: flex;
-    justify-content: center;
-    // align-items: center;
-    gap: 2em;
-    margin: 2em 0;
+// .contact {
+//     display: flex;
+//     justify-content: center;
+//     // align-items: center;
+//     gap: 2em;
+//     margin: 2em 0;
 
-    .card {
-        // max-width: max-content;
-        flex: 1;
-        padding: 1em;
-        border-radius: 10px;
-        background-color: $blue_lite;
-        color: $white;
+//     .card {
+//         // max-width: max-content;
+//         flex: 1;
+//         padding: 1em;
+//         border-radius: 10px;
+//         background-color: $blue_lite;
+//         color: $white;
 
-        .card-content {
-            h2 {
-                font-size: 20px;
-                margin-bottom: 10px;
-            }
+//         .card-content {
+//             h2 {
+//                 font-size: 20px;
+//                 margin-bottom: 10px;
+//             }
 
-            p {
-                font-size: 16px;
-                margin-bottom: 5px;
-                color: rgba($white, .9);
+//             p {
+//                 font-size: 16px;
+//                 margin-bottom: 5px;
+//                 color: rgba($white, .9);
 
-                i {
-                    margin-right: 5px;
-                }
-            }
-        }
-    }
-}
+//                 i {
+//                     margin-right: 5px;
+//                 }
+//             }
+//         }
+//     }
+// }

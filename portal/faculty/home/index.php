@@ -18,14 +18,13 @@ echo "<section class='body'>";
 if ($stmt !== false) {
     // Display faculty information
     while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
-        echo "<div class='faculty-info'>";
+        echo "<div class='faculty_info'>";
         echo "<div><p>Faculty ID:</p><p>" . $row["FacultyId"] . "</p></div>";
         echo "<div><p>Name:</p><p>" . $row["FirstName"] . " " . $row["LastName"] . "</p></div>";
         // echo "<div><p>Last Name:</p><p>" . $row["LastName"] . "</p></div>";
         echo "<div><p>Department:</p><p>" . $row["Department"] . "</p></div>";
         //echo "<div><p>Program:</p><p>" . $row["Program"] . "</p></div>";
         echo '<br>';
-        // echo '<br>';
         echo "<div><p>Date of Birth:</p><p>" . $row["DateOfBirth"]->format('Y-m-d') . "</p></div>";
         echo "<div><p>Email:</p><p>" . $row["Email"] . "</p></div>";
 
@@ -46,12 +45,8 @@ if ($stmt !== false) {
             echo "<div><p>Error retrieving phone numbers:</p><p>" . print_r(sqlsrv_errors(), true) . "</p></div>";
         }
 
-
         echo "<div><p>Country:</p><p>" . $row["Country"] . "</p></div>";
-       // echo "<div><p>Semester:</p><p>" . $row["Subjects"] . "</p></div>";
-        
         echo '<br>';
-        // echo '<br>';
 
         echo "<div><p>Gender:</p><p>" . $row["Gender"] . "</p></div>";
         echo "<div><p>Permanent Address:</p><p>" . $row["PermanentAddress"] . "</p></div>";
@@ -81,7 +76,7 @@ sqlsrv_close($conn);
 </div>
 </section>
 
-<section class="contact">
+<!-- <section class="contact">
     <div class="card">
         <div class="card-content">
             <h2>Contact for Course Registration</h2>
@@ -101,4 +96,4 @@ sqlsrv_close($conn);
         </div>
     </div>
 
-</section>
+</section> -->
