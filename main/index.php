@@ -32,6 +32,38 @@
         </div>
     </div>
 
+    <section id="info" class="info">
+
+        <div class="notice_wrapper">
+            <div class="notice">
+                <h1>NOTICE BOARD</h1>
+                <div id="notice_body">
+                    <?php
+                    require('../conn.php');
+                    require_once('./notice_board/notice_board.php');
+                    ?>
+                </div>
+            </div>
+        </div>
+
+        <div class="facebook">
+
+            <div id="fb-root"></div>
+            <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v18.0" nonce="yjeyGAHv"></script>
+
+            <div class="fb-page" data-href="https://www.facebook.com/stamfordedubd" data-tabs="timeline" data-width="600" data-height="800" data-small-header="true" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
+                <blockquote cite="https://www.facebook.com/stamfordedubd" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/stamfordedubd">Stamford University Bangladesh</a></blockquote>
+            </div>
+        </div>
+
+        <div class="details">
+            <h1>Lorem ipsum dolor sit amet.</h1>
+            <span>Lorem ipsum dolor sit. Lorem, ipsum. Lorem, ipsum dolor.</span><br><br>
+            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Est adipisci commodi illum quod non labore dicta aliquid amet quos saepe. Deleniti repellendus rerum voluptatum quod sit dicta qui facilis, obcaecati maxime! Tenetur saepe perspiciatis aliquam repudiandae perferendis voluptate enim quod facere vitae? Delectus nesciunt amet doloremque corrupti officiis totam, perferendis ut molestiae eum non iure pariatur quasi at possimus, architecto suscipit, explicabo modi corporis? Dolorem, minicumque nostrum? Modi molestiae eius, sapiente voluptates quos quibusdam reiciendis. Aspernatur, accusamus porro voluptates animi ab quia architecto deleniti eos, in officiis ex? Molestiae maiores est, alias perferendis magnam accusamus velit provident consequuntur, tempore totam consequatur qui tenetur ratione et praesentium nostrum laudantium aut eaque quod iusto quasi.</p><br><br>
+            <iframe src="https://www.youtube.com/embed/D5wY4go2m3E?si=f7KZG9T2Utc-k8tj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+    </section>
+
     <h1 class="degree_title">Degrees and Departments</h1>
 
     <p class="degree_details">Providing more than <?php //echo $count; 

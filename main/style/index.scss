@@ -117,6 +117,35 @@
     }
 }
 
+@import 'notice_board'; // shit
+
+#info {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2em;
+    margin: 3em 1em;
+
+    .notice_wrapper,
+    .facebook,
+    .details {
+        height: 100%;
+    }
+
+    .details {
+        h1 {
+            font-size: 20px;
+        }
+
+        span {
+            font-weight: 600;
+        }
+
+        iframe {
+            width: 100%;
+            aspect-ratio: 16/9;
+        }
+    }
+}
 
 .banner {
     display: grid;
