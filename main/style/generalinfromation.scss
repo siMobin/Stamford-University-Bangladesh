@@ -1,0 +1,53 @@
+
+
+.main-content {
+    background-color: white;
+    padding: 10px; /* Decreased padding */
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-height: calc(100vh - 20px); /* Set max-height to viewport height - 2 * margin */
+    overflow-y: auto; /* Enable vertical scrollbar if needed */
+}
+
+.headline {
+    background-color: $primary-color;
+    color: white;
+    padding: 5px 10px; /* Decreased padding */
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 1em; /* Decreased font size */
+    display: inline-block;
+    margin-left: 10px;
+}
+
+
+
+
+.content {
+    margin-top: 10px; /* Decreased margin */
+
+    ul {
+        padding-left: 15px; /* Decreased padding */
+
+        li {
+            margin-bottom: 5px; /* Decreased margin */
+        }
+    }
+
+    h2.headline {
+        background-color: $primary-color;
+        color: white;
+        padding: 5px 10px; /* Decreased padding */
+        border-radius: 5px;
+        font-weight: bold;
+        font-size: 1em; /* Decreased font size */
+        display: inline-block;
+        margin-left: 10px;
+    }
+
+    p {
+        margin-bottom: 10px; /* Decreased margin */
+        font-size: 0.9em; /* Decreased font size */
+    }
+}
+
