@@ -14,19 +14,15 @@
 
             input,
             textarea {
-                width: 300px;
+                min-width: 300px;
+                min-height: 30px;
+                max-width: 300px;
+                padding: .5em;
             }
         }
 
         label {
             font-weight: 600;
-        }
-
-        h2 {
-            font-size: 20px;
-            text-align: center;
-            margin: 1em;
-            text-decoration: underline;
         }
 
         .submit {

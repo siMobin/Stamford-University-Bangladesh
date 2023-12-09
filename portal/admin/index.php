@@ -14,7 +14,7 @@
         <div class="menu-item active" data-page="home">Page 1</div>
         <div class="menu-item" data-page="admissionoffline">Offline Admission</div>
         <div class="menu-item" data-page="notice_board">Notice</div>
-        <!-- <div class="menu-item" data-page="p4">Page 4</div> -->
+        <div class="menu-item" data-page="course_assign">Course Assign</div>
 
         <!-- More menu items... -->
     </div>
@@ -31,6 +31,7 @@
 
     <script src="./script/index.js"></script>
     <script src="./script/admissionoffline.js"></script>
+    <script src="./script/course_assign.js"></script>
 
 </body>
 

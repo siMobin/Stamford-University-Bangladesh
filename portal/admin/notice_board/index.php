@@ -92,16 +92,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <h2>Publish Global Notice</h2>
             <div>
                 <label class="required" for="title">Title</label>
-                <input type="text" name="title" required>
+                <input type="text" name="title" required placeholder="Title">
             </div>
 
             <div>
                 <label for="content">Content</label>
-                <textarea name="content" rows="3"></textarea>
+                <textarea name="content" rows="3" placeholder="Enter content here"></textarea>
             </div>
 
             <div>
-                <label for="file">Choose File (20 MB max)</label>
+                <label for="file">Choose File <i>(20 MB max)</i></label>
                 <input type="file" name="file" accept=".pdf, .jpg, .png, .webp, .gif, .mp4, .webm, .mov">
             </div>
 
