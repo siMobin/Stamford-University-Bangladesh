@@ -38,3 +38,4 @@ conn.php
 Storage/image
 Storage/pdf
 Storage/video
+Storage/json_files
