@@ -5,7 +5,8 @@
         <img class="logo" src="./images/logo.png" alt="">
 
         <div>
-            <a href="#">avbryry</a>
+            <a href="./course_search/">Search Courses</a>
+            <a href="#">Library</a>
             <a href="./career/">Career</a>
             <a href="#">avbryry</a>
         </div>

@@ -1,0 +1,41 @@
+@use 'root' as *;
+@import 'nav';
+@import 'footer';
+
+.select_area {
+    margin: 2em 1em;
+
+    label {
+        font-weight: 600;
+    }
+
+    select {
+        padding: .2em 1em;
+    }
+}
+
+table {
+    border-collapse: collapse;
+    margin: 1em;
+    padding: .5em;
+
+    td {
+        padding: .2em .5em;
+        border: 1px solid rgb(0, 0, 0);
+    }
+
+    th {
+        @extend td;
+        font-weight: 600;
+    }
+
+    tr,
+    th,
+    td {
+        text-align: center;
+    }
+}
+
+.submit {
+    margin: .5em 1em;
+}
