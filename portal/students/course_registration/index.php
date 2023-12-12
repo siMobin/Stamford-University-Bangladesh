@@ -15,7 +15,7 @@ if (!isset($_SESSION["studentId"])) {
 $department = substr($studentId, 0, 3);
 $batch = substr($studentId, 3, 3);
 
-require_once('../../../conn.php');
+require('../../../conn.php');
 
 // Establishes the connection
 $conn = sqlsrv_connect($serverName, $connectionInfo);
@@ -71,17 +71,81 @@ foreach ($matchingCourses as $course) {
     echo "<tr><td>{$course['courseCode']}</td><td>{$course['semester']}</td><td>{$course['name']}</td><td>{$course['credit']}</td><td>{$course['prerequisites']}</td></tr>";
 }
 echo "</table>";
-if($dueamount <= 0){
-    echo '<form action="CRSregister.php" method="post">';
-    echo '<input type="submit" name="register" value="Register">';
-    echo '</form>'; }
-    else{
-    echo "Please pay your dues before registering.";
+foreach ($matchingCourses as $course) {
+    $courseCode = $course['courseCode'];
+    $semester = $course['semester'];
+        // Check to see if courses are already registered for the same student and semester.
+        $sqlcheck = "SELECT * FROM CRS_confirm WHERE course_code = ? AND studentID = ? AND semester = ?";
+        $params_check = array($courseCode, $studentId, $semester);
+        $options_check = array("Scrollable" => SQLSRV_CURSOR_KEYSET);
+        $result_check = sqlsrv_query($conn, $sqlcheck, $params_check, $options_check);
+    
+        if (!$result_check) {
+            // Handle query error
+            die(print_r(sqlsrv_errors(), true));
+        }
     }
+    
+        $num_rows = sqlsrv_num_rows($result_check);
+if($num_rows > 0){
+    echo "You are already registered for all the courses!";
+}
+else
+if ($dueamount <= 0) {
+    ?>
+    
+     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+     <input type="submit" name="register" value="Register">
+     </form>
+     <?php
+} else {
+    echo "Please pay your dues before registering.";
+}
+
+// Check if the register button is clicked
+if (isset($_POST['register'])) {
+    require('../../../conn.php');
+    // Establish a new connection for the registration process
+    $conn = sqlsrv_connect($serverName, $connectionInfo);
+
+    // Check connection
+    if (!$conn) {
+        die(print_r(sqlsrv_errors(), true));
+    }
+
+    // Iterate through matching courses and insert into CRS_confirm table
+    foreach ($matchingCourses as $course) {
+        $courseCode = $course['courseCode'];
+        $semester = $course['semester'];
+
+            // Insert data into CRS_confirm table
+            $sql_insert = "INSERT INTO CRS_confirm (course_code, studentID, semester) VALUES (?, ?, ?)";
+            $params_insert = array($courseCode, $studentId, $semester);
+            $options_insert = array("Scrollable" => SQLSRV_CURSOR_KEYSET);
+            $result_insert = sqlsrv_query($conn, $sql_insert, $params_insert, $options_insert);
+    
+            if (!$result_insert) {
+                // Handle insertion error (you can customize this part)
+                die(print_r(sqlsrv_errors(), true));
+            // }
+        }
+    }
+    if (isset($_SESSION['success_message'])) {
+        echo "<script>alert('{$_SESSION['success_message']}');</script>";
+        unset($_SESSION['success_message']);
+    } elseif (isset($_SESSION['error_message'])) {
+        echo "<script>alert('{$_SESSION['error_message']}');</script>";
+        unset($_SESSION['error_message']);
+    }
+    $_SESSION['success_message'] = "Your courses have been successfully registered";
+
+
+    header("Location: ../");
+    
+
+    exit;
+}
 
 // Close the database connection
 sqlsrv_close($conn);
 ?>
-
-</body>
-</html>
