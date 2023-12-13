@@ -54,6 +54,8 @@ if (isset($_GET['logout'])) {
     <link rel="icon" type="image/x-icon" href="./images/logo.png">
     <title>SUB-Student Portal</title>
     <link rel="stylesheet" href="./style/index.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
 </head>
 
 <body>
@@ -62,6 +64,7 @@ if (isset($_GET['logout'])) {
         <div class="menu-item active" data-page="home">Home</div>
         <div class="menu-item" data-page="p2">Page 2</div>
         <div class="menu-item" data-page="course_registration">Course registration</div>
+        <div class="menu-item" data-page="result_search">result_search</div>
         <!-- <div class="menu-item" data-page="notice_board">Notice</div> -->
         <!-- <div class="menu-item" data-page="p4">Page 4</div> -->
 
@@ -97,6 +100,7 @@ if (isset($_GET['logout'])) {
     <main>
         <!-- Page content will be loaded here -->
     </main>
+    <!-- <div id="resultContainer"></div> -->
 
 
     <script src="./script/index.js"></script>

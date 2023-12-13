@@ -18,6 +18,7 @@ function loadPage(page) {
     xhr.send();
 }
 
+
 // Get all menu items
 var menuItems = document.querySelectorAll('.menu-item');
 
@@ -48,3 +49,27 @@ var lastActivePage = localStorage.getItem('activePage');
 
 // Simulate a click on the last active menu item or the default active menu item
 document.querySelector('.menu-item[data-page="' + (lastActivePage || 'home') + '"]').click();
+
+// Function to handle the AJAX request for result_search
+function searchResults() {
+    var selectedSemester = $("#semester").val();
+
+    $.ajax({
+        type: "POST",
+        url: "./result_search/index.php", // Update the URL to match the correct path
+        data: { semester: selectedSemester },
+        success: function (response) {
+            // Display the results in the resultContainer
+            $("#resultContainer").html(response);
+        }
+    });
+}
+
+$(document).ready(function () {
+    // Attach the event handler to the searchButton
+    $("#searchButton").click(searchResults);
+
+    // Call the function when the page loads
+    searchResults();
+});
+
