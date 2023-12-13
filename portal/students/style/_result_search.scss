@@ -1,0 +1,32 @@
+table {
+    th {
+        background-color: $blue_lite;
+        color: $white;
+    }
+
+    tr {
+        &:nth-child(odd) {
+            background-color: rgba($blue_white, .5);
+        }
+    }
+}
+
+.result_table {
+    margin: 1em;
+
+    td,
+    th {
+        padding: .5em 1em;
+    }
+}
+
+#searchForm {
+    label {
+        font-weight: 600;
+        margin: 0 1em;
+    }
+
+    select {
+        padding: .3em 1em;
+    }
+}

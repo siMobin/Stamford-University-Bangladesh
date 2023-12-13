@@ -1,4 +1,9 @@
-// Function to load content for a given page
+/**
+ * Loads a page using an XMLHttpRequest.
+ *
+ * @param {string} page - The URL of the page to load.
+ * @return {void} This function does not return a value.
+ */
 function loadPage(page) {
     // Create a new XMLHttpRequest
     var xhr = new XMLHttpRequest();
@@ -50,7 +55,12 @@ var lastActivePage = localStorage.getItem('activePage');
 // Simulate a click on the last active menu item or the default active menu item
 document.querySelector('.menu-item[data-page="' + (lastActivePage || 'home') + '"]').click();
 
-// Function to handle the AJAX request for result_search
+/**
+ * Retrieves search results based on the selected semester.
+ *
+ * @param {string} selectedSemester - The selected semester.
+ * @return {void} The function does not return a value.
+ */
 function searchResults() {
     var selectedSemester = $("#semester").val();
 
