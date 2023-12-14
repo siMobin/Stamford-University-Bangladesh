@@ -62,7 +62,7 @@ if (isset($_GET['logout'])) {
         <div class="menu-item active" data-page="home">Home</div>
         <div class="menu-item" data-page="p2">Page 2</div>
         <div class="menu-item" data-page="course_load">Course Load</div>
-        <!-- <div class="menu-item" data-page="p4">Page 4</div> -->
+        <div class="menu-item" data-page="loaded_courses">Loaded courses</div>
 
         <!-- More menu items... -->
     </div>
