@@ -39,8 +39,8 @@ function displayResults($conn, $studentId, $semester)
     echo "<table class='result_table' border='1' style=' border-collapse: collapse;'>
     <tr>
     <th>Course Code</th>
-    <th>Name</th>
-    <th>Semester</th>
+    <th>Course Title</th>
+    <th>Batch</th>
     <th>Mid</th>
     <th>Final</th>
     <th>30%</th>
@@ -54,7 +54,7 @@ function displayResults($conn, $studentId, $semester)
         echo "<tr>";
         echo "<td>" . (isset($row['course_code']) ? $row['course_code'] : '') . "</td>";
         echo "<td>" . (isset($row['courseName']) ? $row['courseName'] : '') . "</td>";
-        echo "<td>" . (isset($row['semester']) ? $row['semester'] : '') . "</td>";
+        echo "<td>" . (isset($row['batch']) ? $row['batch'] : '') . "</td>";
         echo "<td>" . (isset($row['mid']) ? $row['mid'] : '') . "</td>";
         echo "<td>" . (isset($row['final']) ? $row['final'] : '') . "</td>";
         echo "<td>" . (isset($row['30%']) ? $row['30%'] : '') . "</td>";
@@ -138,8 +138,10 @@ function calculateGrade($cgpa)
         return 'C';
     } elseif ($cgpa >= 2.0) {
         return 'D';
-    } else {
+    } elseif ($cgpa <= 2.0 && $cgpa > 0) {
         return 'F';
+    } else {
+        return '-';
     }
 }
 
@@ -160,8 +162,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <label for="semester">Select Semester:</label>
     <?php
     //Select Query
-    $sql = "SELECT DISTINCT semester FROM CRS_confirm Order by semester";
-    $getResults = sqlsrv_query($conn, $sql);
+    $sql = "SELECT DISTINCT semester FROM CRS_confirm WHERE studentID = ?";
+    $params = array($studentId);
+    $options = array("Scrollable" => SQLSRV_CURSOR_KEYSET);
+
+    $getResults = sqlsrv_query($conn, $sql, $params, $options);
 
     if ($getResults == FALSE)
         die(print_r(sqlsrv_errors(), true));
