@@ -3,9 +3,12 @@
 ########### build #######
 node
 node_modules
+vendor
+vendor/
 *x64
 # package.json
-*lock.json
+*.lock*
+*-lock*
 #########################
 #########################
 *.zip
@@ -42,3 +45,6 @@ Storage/image
 Storage/pdf
 Storage/video
 Storage/json_files
+
+# Server Dependency
+portal/**/*.xlsx
