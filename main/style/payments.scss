@@ -1,0 +1,26 @@
+@use 'root' as *;
+@import 'nav';
+@import 'footer';
+
+.table_wrapper {
+    padding: 1em;
+}
+
+table {
+    width: 100% !important;
+}
+
+small {
+    font-size: 11px;
+    color: red;
+}
+
+.warning {
+    .warn {
+        display: flex;
+        border-radius: 10px;
+        background-color: $blue_white;
+        padding: 1em .5em;
+        margin: 1em;
+    }
+}
