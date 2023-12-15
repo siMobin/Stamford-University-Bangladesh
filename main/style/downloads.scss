@@ -1,0 +1,63 @@
+@use 'root' as *;
+@import 'nav';
+@import 'footer';
+
+.tab {
+    overflow: hidden;
+    background-color: $blue_white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    button {
+        // background-color: inherit;
+        font-weight: 600;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: .5em 1em;
+        font-size: 18px;
+
+        &:hover {
+            background-color: rgba($blue_lite, .2);
+        }
+
+        &.active {
+            background-color: $blue_lite;
+            color: $white;
+        }
+    }
+}
+
+#x {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 2em;
+    padding: 1em;
+    margin-bottom: 2em;
+
+    .box {
+        max-width: 300px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        padding: 10px;
+        border-radius: 5px;
+        // aspect-ratio: 1.5/1;
+
+        p {
+            font-size: 12px;
+            font-style: italic;
+            padding: .5em 0;
+        }
+
+
+    }
+}
+
+/* lorem */
+
+.tabcontent {
+    display: none;
+
+    @extend #x;
+}
