@@ -40,7 +40,7 @@ if (isset($_POST['search'])) {
         <select name="semester" id="semester">
             <?php
             // Retrieve distinct semesters and batches from course_assign
-            $getDistinctDataQuery = "SELECT DISTINCT semester, batch FROM course_assign";
+            $getDistinctDataQuery = "SELECT DISTINCT semester FROM course_assign";
             $distinctData = sqlsrv_query($conn, $getDistinctDataQuery);
 
             while ($row = sqlsrv_fetch_array($distinctData, SQLSRV_FETCH_ASSOC)) {
@@ -55,7 +55,7 @@ if (isset($_POST['search'])) {
         <select name="batch" id="batch">
             <?php
             // Retrieve distinct semesters and batches from course_assign
-            $getDistinctDataQuery = "SELECT DISTINCT semester, batch FROM course_assign";
+            $getDistinctDataQuery = "SELECT DISTINCT batch FROM course_assign";
             $distinctData = sqlsrv_query($conn, $getDistinctDataQuery);
             while ($row = sqlsrv_fetch_array($distinctData, SQLSRV_FETCH_ASSOC)) {
                 $semester = $row['semester'];
