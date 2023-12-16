@@ -16,9 +16,11 @@
 
         foreach ($images as $image) {
         ?>
-            <div class="swiper-slide">
+            <a class="swiper-slide" href="#">
+                <!-- <div > -->
                 <img class="swiper-gl-image" src="<?= $imageFolder . $image ?>" alt="" loading="lazy">
-            </div>
+                <!-- </div> -->
+            </a>
         <?php
         }
         ?>

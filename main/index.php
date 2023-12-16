@@ -147,6 +147,8 @@
 
     <?php require_once './footer.php'; ?>
 
+    <script type="module" src="../cursor.js"></script>
+
 </body>
 
 </html>
