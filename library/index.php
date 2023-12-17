@@ -4,13 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style/index.css">
     <title>Document</title>
 </head>
 
 <body>
 
-    <form>
-        <input type="text" size="30" onkeyup="showResult(this.value)" placeholder="Search...">
+    <form class="search_form">
+        <i class="fa-brands fa-searchengin"></i>
+        <input id="search" type="text" size="30" onkeyup="showResult(this.value)" placeholder="Search..." autocomplete="off">
+        <i class="fa-solid fa-arrows-spin" title="Working"></i>
     </form>
 
     <div id="tableContent">
