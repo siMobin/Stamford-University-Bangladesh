@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['remove_course'])) {
 }
 
 // Fetch courses for the faculty
-$query = "SELECT course_code, course_name FROM course_load WHERE facultyID = ?";
+$query = "SELECT * FROM course_load WHERE facultyID = ?";
 $params = array($FacultyId);
 $result = sqlsrv_query($conn, $query, $params);
 
@@ -39,20 +39,37 @@ if ($result === false) {
 } else {
     if (sqlsrv_has_rows($result)) {
         echo "<h1>List of Courses</h1>";
-        echo "<ul>";
+        echo "<table >";
         while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
             $courseCode = $row['course_code'];
-            $courseName = $row['course_name'];
+            $courseName = $row['course_name'] ?? 'Database Error';
+            $batch = $row['batch'];
 
-            echo "<li>$courseCode - $courseName 
+            echo "
+            <tr>
+                <td>
+                    <li>
+                        $courseCode - $courseName 
+                    </li>
+                </td>
+
+                <td>
+                        $batch
+                </td>
+
+                <td>
                     <a href='./loaded_courses/view_students.php?course_code=$courseCode'>View Details</a>
+                </td>
+
+                <td>
                     <form method='post' action='" . $_SERVER['PHP_SELF'] . "'>
                         <input type='hidden' name='course_code' value='$courseCode'>
-                        <input type='submit' name='remove_course' value='Remove'>
+                        <input class='submit' type='submit' name='remove_course' value='Unload'>
                     </form>
-                  </li>";
+                </td>                
+            </tr>";
         }
-        echo "</ul>";
+        echo "</table>";
     } else {
         echo "No courses found for this faculty.";
     }
@@ -60,4 +77,3 @@ if ($result === false) {
 
 sqlsrv_free_stmt($result);
 sqlsrv_close($conn);
-?>

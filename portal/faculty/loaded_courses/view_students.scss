@@ -1,0 +1,51 @@
+@use '../style/root' as *;
+
+
+.back_to {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    gap: .5em;
+    color: $blue_lite;
+    padding: 1em;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 600;
+
+    i {
+        font-size: 30px;
+    }
+
+    &:hover {
+        font-weight: 400;
+    }
+}
+
+table {
+    width: 100%;
+
+    td {
+        padding: .2em .5em;
+
+        &:focus-within {
+            background-color: $blue_lite;
+            color: $white;
+            font-weight: 600;
+        }
+    }
+
+    th {
+        @extend td;
+        font-weight: 600;
+    }
+
+    tr,
+    th,
+    td {
+        text-align: center;
+    }
+}
+
+.submit {
+    margin: 1em;
+}

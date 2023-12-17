@@ -41,6 +41,37 @@ $sidebar-width: 200px;
             background-color: $blue;
         }
     }
+
+    button,
+    input {
+        border: none;
+        outline: none;
+    }
+
+    .table_wrapper {
+        margin: 1em;
+    }
+
+    table {
+        border-collapse: collapse;
+
+        td,
+        th {
+
+            padding: .3em .5em;
+        }
+
+        th {
+            background-color: $blue_lite;
+            color: $white;
+        }
+
+        tr {
+            &:nth-child(odd) {
+                background-color: $blue_white;
+            }
+        }
+    }
 }
 
 #sidebar {
