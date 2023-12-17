@@ -57,16 +57,16 @@ function displayResults($conn, $studentId, $semester)
         echo "<td>" . (isset($row['batch']) ? $row['batch'] : '') . "</td>";
         echo "<td>" . (isset($row['mid']) ? $row['mid'] : '') . "</td>";
         echo "<td>" . (isset($row['final']) ? $row['final'] : '') . "</td>";
-        echo "<td>" . (isset($row['30%']) ? $row['30%'] : '') . "</td>";
+        echo "<td>" . (isset($row['thirtyPercent']) ? $row['thirtyPercent'] : '') . "</td>";
 
         // Calculate CGPA for each course
         // TODO: Update credit dynamically
         $courseCredits = 3; // Assuming each course has 3 credits, adjust as needed
-        $gradePoints = calculateGradePoints($row['mid'], $row['final'], $row['30%']);
+        $gradePoints = calculateGradePoints($row['mid'], $row['final'], $row['thirtyPercent']);
         $totalCredits += $courseCredits;
         $totalGradePoints += $gradePoints;
         global $totalScore;
-        $totalScore = $row['mid'] + $row['final'] + $row['30%'];
+        $totalScore = $row['mid'] + $row['final'] + $row['thirtyPercent'];
 
         echo "<td>" . $totalScore . "</td>";
 
