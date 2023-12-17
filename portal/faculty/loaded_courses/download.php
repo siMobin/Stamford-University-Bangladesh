@@ -22,7 +22,11 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 // Fetch student details for the selected course
-$query = "SELECT studentID, semester, mid, final, [30%] FROM CRS_confirm WHERE course_code = ?";
+$query = $query = "SELECT c.studentID, c.mid, c.final, c.thirtyPercent, 
+CONCAT(s.FirstName, ' ', s.LastName) AS name, s.Email
+FROM CRS_confirm c
+INNER JOIN students s ON c.studentID = s.StudentId
+WHERE c.course_code = ?";
 $params = array($courseCode);
 $result = sqlsrv_query($conn, $query, $params);
 
@@ -37,11 +41,12 @@ if ($result === false) {
 
         // Set headers
         $sheet->setCellValue('A1', 'Student ID');
-        $sheet->setCellValue('B1', 'Semester');
-        $sheet->setCellValue('C1', 'Mid');
-        $sheet->setCellValue('D1', 'Final');
-        $sheet->setCellValue('E1', '30%');
-        $sheet->setCellValue('F1', 'Total');
+        $sheet->setCellValue('B1', 'Name');
+        $sheet->setCellValue('C1', 'Email');
+        $sheet->setCellValue('D1', 'Mid');
+        $sheet->setCellValue('E1', 'Final');
+        $sheet->setCellValue('F1', '30%');
+        $sheet->setCellValue('G1', 'Total');
         // $sheet->setCellValue('G1', '');
 
         // Style for bold and background color
@@ -57,18 +62,24 @@ if ($result === false) {
             ],
         ];
 
-        // Apply style to headers A1 to F1
-        $sheet->getStyle('A1:F1')->applyFromArray($style);
+        // Apply style to headers A1 to G1
+        $sheet->getStyle('A1:G1')->applyFromArray($style);
+        
+                // Adjust column widths based on content
+                foreach (range('A', 'G') as $col) {
+                    $sheet->getColumnDimension($col)->setAutoSize(true);
+                }
 
         $row = 2; // Start adding data from row 2
         while ($data = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
             $sheet->setCellValue('A' . $row, $data['studentID']);
-            $sheet->setCellValue('B' . $row, $data['semester']);
-            $sheet->setCellValue('C' . $row, $data['mid']);
-            $sheet->setCellValue('D' . $row, $data['final']);
-            $sheet->setCellValue('E' . $row, $data['30%']);
+            $sheet->setCellValue('B' . $row, $data['name']);
+            $sheet->setCellValue('C' . $row, $data['Email']);
+            $sheet->setCellValue('D' . $row, $data['mid']);
+            $sheet->setCellValue('E' . $row, $data['final']);
+            $sheet->setCellValue('F' . $row, $data['thirtyPercent']);
             // Calculate Total
-            $sheet->setCellValue('F' . $row, '=SUM(C' . $row . ',D' . $row . ',E' . $row . ')');
+            $sheet->setCellValue('G' . $row, '=SUM(D' . $row . ',E' . $row . ',F' . $row . ')');
             $row++;
         }
 
