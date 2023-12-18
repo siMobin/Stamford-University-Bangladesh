@@ -1,0 +1,78 @@
+@use 'root' as *;
+@import 'nav';
+@import 'footer';
+
+details {
+    margin: 1em;
+
+    summary {
+        font-weight: 600;
+        font-size: 20px;
+    }
+
+    p {
+        margin: 1em 0;
+    }
+
+    ul {
+        margin-left: 2em;
+        line-height: 2;
+    }
+
+    .caution {
+        margin-right: .5em;
+        content: "\26A0";
+        font-size: 20px;
+        font-weight: 900;
+    }
+
+    &:has(.major) {
+        li {
+            list-style-type: none;
+
+            &::before {
+                @extend .caution;
+                color: red;
+            }
+        }
+    }
+
+    &:has(.minor) {
+        li {
+            list-style-type: none;
+
+            &::before {
+                @extend .caution;
+                color: rgb(230, 230, 1);
+            }
+        }
+    }
+
+    &:has(.EDA) {
+        li {
+            list-style-type: circle;
+        }
+    }
+}
+
+.notice {
+    margin: 2em;
+    padding: 1em;
+    background-color: rgba($blue_white, 1);
+    border-radius: 10px;
+    font-weight: 600;
+
+    strong {
+        font-size: 20px;
+        color: green;
+
+        &::before {
+            content: "\24D8";
+            padding-right: .3em;
+        }
+    }
+
+    p {
+        margin-left: 3em;
+    }
+}
