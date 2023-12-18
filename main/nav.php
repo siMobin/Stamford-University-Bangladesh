@@ -1,15 +1,26 @@
 <link rel="stylesheet" href="./style/nav.css">
-
+<style>
+    /* Additional or modified CSS styles can be added here */
+</style>
 <nav>
     <section class="top">
         <img class="logo" src="./images/logo.png" alt="">
 
-        <div>
+        <div class="top_nav">
+            <div>
+                <div class="search_box">
+                    <i class="fa-brands fa-searchengin"></i>
+                    <input type="text" id="searchInput" placeholder="Search...">
+                    <i class="fa-solid fa-arrows-spin"></i>
+                </div>
+                <div id="suggestions"></div>
+            </div>
             <a href="./course_search/">Search Courses</a>
             <a href="#">Library</a>
             <a href="./career/">Career</a>
             <a href="#">avbryry</a>
         </div>
+
     </section>
 
     <section class="main">
@@ -51,3 +62,5 @@
         </div>
     </section>
 </nav>
+
+<script src="./script/search.js"></script>
