@@ -1,7 +1,5 @@
 <link rel="stylesheet" href="./style/nav.css">
-<style>
-    /* Additional or modified CSS styles can be added here */
-</style>
+
 <nav>
     <section class="top">
         <img class="logo" src="./images/logo.png" alt="">
