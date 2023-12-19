@@ -17,6 +17,19 @@
         <div class="menu-item" data-page="course_assign">Course Assign</div>
 
         <!-- More menu items... -->
+
+        <div class="menu-drop" onclick="toggleSubmenu(event)">
+            Library <i class="fa-solid fa-caret-down"></i>
+            <div class="submenu" id="submenu">
+                <div class="menu-item submenu-item" data-page="./p3/">Submenu 1</div>
+                <div class="menu-item submenu-item" data-page="./p3/">Submenu 2</div>
+                <a href="./p3/">
+                    <div class="menu-item submenu-item">Submenu link</div>
+                </a>
+
+                <!-- Add more submenu items as needed -->
+            </div>
+        </div>
     </div>
 
 
