@@ -1,8 +1,19 @@
 <link rel="stylesheet" href="./style/nav.css">
 
+<?php
+$path = $_SERVER['DOCUMENT_ROOT'] . '/main';
+
+$protocol = stripos($_SERVER['SERVER_PROTOCOL'], 'https') === true ? 'https://' : 'http://';
+$host = 'http://' . $_SERVER['HTTP_HOST'];
+$hostPath = $host . "/main";
+?>
+
+<?php // echo  $host . "<br>" . $hostPath; 
+?>
+
 <nav>
     <section class="top">
-        <img class="logo" src="./images/logo.png" alt="">
+        <img class="logo" src="<?php echo  $hostPath; ?>/images/logo.png" alt="">
 
         <div class="top_nav">
             <div>
@@ -13,9 +24,9 @@
                 </div>
                 <div id="suggestions"></div>
             </div>
-            <a href="./course_search/">Search Courses</a>
-            <a href="#">Library</a>
-            <a href="./career/">Career</a>
+            <a href="<?php echo  $hostPath; ?>/course_search/">Search Courses</a>
+            <a href="<?php echo  $host; ?>/library">Library</a>
+            <a href="<?php echo  $hostPath; ?>/career/">Career</a>
             <a href="#">avbryry</a>
         </div>
 
@@ -25,9 +36,9 @@
         <div class="dropdown">
             <a href="#">About Us</a>
             <div class="dropdown-content">
-                <a href="./mvg/">Mission, Vision and Goals</a>
-                <a href="./genralinformation/">General Information</a>
-                <a href="./contact/">Contact</a>
+                <a href="<?php echo  $hostPath; ?>/mvg/">Mission, Vision and Goals</a>
+                <a href="<?php echo  $hostPath; ?>/genralinformation/">General Information</a>
+                <a href="<?php echo  $hostPath; ?>/contact/">Contact</a>
             </div>
         </div>
         <a href="#">avbryry</a>
@@ -52,13 +63,13 @@
         <div class="dropdown">
             <a href="#">Portal</a>
             <div class="dropdown-content">
-                <a href="../portal/students/">Student Portal</a>
+                <a href="<?php echo  $host; ?>/portal/students/">Student Portal</a>
                 <a href="#">Faculty Portal</a>
                 <a href="#">Staff Portal</a>
-                <a href="../portal/admin/">Admin Portal</a>
+                <a href="<?php echo  $host; ?>/portal/admin/">Admin Portal</a>
             </div>
         </div>
     </section>
 </nav>
 
-<script src="./script/search.js"></script>
+<script src="<?php echo  $hostPath; ?>/script/search.js"></script>

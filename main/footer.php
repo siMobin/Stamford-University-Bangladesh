@@ -1,9 +1,20 @@
 <link rel="stylesheet" href="./style/footer.css">
 
+<?php
+$path = $_SERVER['DOCUMENT_ROOT'] . '/main';
+
+$protocol = stripos($_SERVER['SERVER_PROTOCOL'], 'https') === true ? 'https://' : 'http://';
+$host = 'http://' . $_SERVER['HTTP_HOST'];
+$hostPath = $host . "/main";
+?>
+
+<?php // echo  $host . "<br>" . $hostPath; 
+?>
+
 <footer>
     <div class="container">
         <div class="about">
-            <img class="logo" src="./images/logo_big.png" alt="">
+            <img class="logo" src="<?php echo $hostPath; ?>/images/logo_big.png" alt="">
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt aperiam quia ipsum eaque molestias facilis! Veniam molestias porro illo illum soluta itaque, laudantium maxime velit assumenda labore autem neque inventore.</p>
         </div>
 
