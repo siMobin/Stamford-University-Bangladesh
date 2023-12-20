@@ -1,4 +1,9 @@
-// JavaScript to add and remove phone number input fields
+/**
+ * Adds a phone number input and connection type dropdown to the phone container.
+ *
+ * @param {type} container - the element that contains the phone number inputs and dropdowns
+ * @return {type} undefined
+ */
 function addPhoneNumber() {
     var container = document.getElementById("phoneContainer");
 
@@ -7,6 +12,12 @@ function addPhoneNumber() {
     container.appendChild(phoneGroup);
 }
 
+/**
+ * Removes the last phone number input from the phone container.
+ *
+ * @param {none} none - no parameters
+ * @return {none} none - does not return anything
+ */
 function removePhoneNumber() {
     var container = document.getElementById("phoneContainer");
     var phoneGroups = container.getElementsByClassName("phone-group");
@@ -17,6 +28,11 @@ function removePhoneNumber() {
     }
 }
 
+/**
+ * Creates a phone group element.
+ *
+ * @return {HTMLElement} The created phone group element.
+ */
 function createPhoneGroup() {
     var phoneGroup = document.createElement("div");
     phoneGroup.className = "phone-group";
@@ -38,6 +54,11 @@ function createPhoneGroup() {
     return phoneGroup;
 }
 
+/**
+ * Creates a phone number input element.
+ *
+ * @return {HTMLInputElement} The created input element for phone numbers.
+ */
 function createPhoneNumberInput() {
     var input = document.createElement("input");
     input.type = "text";
