@@ -15,6 +15,7 @@ vendor/
 #########################
 *.zip
 *.exe
+*.log
 #########################
 doc
 Documents
@@ -34,12 +35,9 @@ TCPDF
 # Temporary ignored
 # main/header_slider/images
 
-# Not ignored
-!main/header_slider/assets/index.css
-
 # For security reasons, we cannot upload this to GitHub.
 # Please create a conn.php file in the **root** directory
-#of the project.
+# of the project.
 conn.php
 
 #Storage folders and subfolders
@@ -47,6 +45,19 @@ Storage/image
 Storage/pdf
 Storage/video
 Storage/json_files
+storage/profile/*.*
 
 # Server Dependency
 portal/**/*.xlsx
+
+
+# Not ignored
+# Set on the bottom/lower level
+!main/header_slider/assets/index.css
+!storage/profile/noprofile.*
+!storage/profile/default_*.svg
+
+# Do not write anything below this line
+#######################################
+############# -END OF FILE- ###########
+#######################################
