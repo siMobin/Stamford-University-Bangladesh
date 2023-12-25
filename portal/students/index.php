@@ -1,4 +1,11 @@
 <?php
+$path = $_SERVER['DOCUMENT_ROOT'] . '/main';
+
+$protocol = stripos($_SERVER['SERVER_PROTOCOL'], 'https') === true ? 'https://' : 'http://';
+$host = 'http://' . $_SERVER['HTTP_HOST'];
+$hostPath = $host . "/main";
+
+require($_SERVER["DOCUMENT_ROOT"] . "/log.php");
 session_start();
 
 if (!isset($_SESSION["studentId"])) {
@@ -11,7 +18,7 @@ if (!isset($_SESSION["studentId"])) {
 
 date_default_timezone_set('Asia/Dhaka'); // Set the timezone to Bangladesh
 
-require_once('../../conn.php');
+require_once($_SERVER["DOCUMENT_ROOT"] . '/conn.php');
 
 $sql = "SELECT * FROM students WHERE StudentId = ?";
 $params = array($studentId);
@@ -65,6 +72,7 @@ if (isset($_GET['logout'])) {
         <div class="menu-item" data-page="p2">Page 2</div>
         <div class="menu-item" data-page="course_registration">Course registration</div>
         <div class="menu-item" data-page="result_search">Result Search</div>
+        <div class="menu-item" data-page="downloads">Downloads</div>
         <!-- <div class="menu-item" data-page="notice_board">Notice</div> -->
         <!-- <div class="menu-item" data-page="p4">Page 4</div> -->
 
@@ -94,7 +102,10 @@ if (isset($_GET['logout'])) {
     </nav>
 
     <header>
-        <h1>Lorem ipsum dolor sit amet header.</h1>
+        <?php require './profile/index.php'; ?>
+        <div class="header_content">
+            <h1>Lorem ipsum dolor sit amet header.</h1>
+        </div>
     </header>
 
     <main>
@@ -104,6 +115,7 @@ if (isset($_GET['logout'])) {
 
 
     <script src="./script/index.js"></script>
+    <script src="<?php echo $hostPath ?>/script/downloads.js"></script>
 
 </body>
 

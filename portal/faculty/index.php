@@ -1,4 +1,10 @@
 <?php
+$path = $_SERVER['DOCUMENT_ROOT'] . '/main';
+
+$protocol = stripos($_SERVER['SERVER_PROTOCOL'], 'https') === true ? 'https://' : 'http://';
+$host = 'http://' . $_SERVER['HTTP_HOST'];
+$hostPath = $host . "/main";
+
 session_start();
 
 if (!isset($_SESSION["FacultyId"])) {
@@ -63,6 +69,7 @@ if (isset($_GET['logout'])) {
         <div class="menu-item" data-page="p2">Page 2</div>
         <div class="menu-item" data-page="course_load">Course Load</div>
         <div class="menu-item" data-page="loaded_courses">Loaded courses</div>
+        <div class="menu-item" data-page="downloads">Downloads</div>
 
         <!-- More menu items... -->
     </div>
@@ -90,7 +97,10 @@ if (isset($_GET['logout'])) {
     </nav>
 
     <header>
-        <h1>Lorem ipsum dolor sit amet header.</h1>
+        <?php require './profile/index.php'; ?>
+        <div class="header_content">
+            <h1>Lorem ipsum dolor sit amet header.</h1>
+        </div>
     </header>
 
     <main>
@@ -99,7 +109,7 @@ if (isset($_GET['logout'])) {
 
 
     <script src="./script/index.js"></script>
-
+    <script src="<?php echo $hostPath ?>/script/downloads.js"></script>
 </body>
 
 </html>

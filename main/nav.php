@@ -1,15 +1,17 @@
-<link rel="stylesheet" href="./style/nav.css">
-
 <?php
 $path = $_SERVER['DOCUMENT_ROOT'] . '/main';
 
 $protocol = stripos($_SERVER['SERVER_PROTOCOL'], 'https') === true ? 'https://' : 'http://';
 $host = 'http://' . $_SERVER['HTTP_HOST'];
 $hostPath = $host . "/main";
+$node_modulesPath = $host . "/node_modules";
 ?>
 
 <?php // echo  $host . "<br>" . $hostPath; 
 ?>
+
+<link rel="stylesheet" href="<?php echo $node_modulesPath ?>/aos/dist/aos.css">
+<link rel="stylesheet" href="<?php echo $hostPath ?>/style/nav.css">
 
 <nav>
     <section class="top">
@@ -32,7 +34,7 @@ $hostPath = $host . "/main";
 
     </section>
 
-    <section class="main">
+    <section class="main" data-aos="fade-up" data-aos-duration="1000">
         <div class="dropdown">
             <a href="#">About Us</a>
             <div class="dropdown-content">
@@ -64,12 +66,16 @@ $hostPath = $host . "/main";
             <a href="#">Portal</a>
             <div class="dropdown-content">
                 <a href="<?php echo  $host; ?>/portal/students/">Student Portal</a>
-                <a href="#">Faculty Portal</a>
-                <a href="#">Staff Portal</a>
+                <a href="<?php echo  $host; ?>/portal/faculty/">Faculty Portal</a>
+                <a href="<?php echo  $host; ?>/portal/staff/">Staff Portal</a>
                 <a href="<?php echo  $host; ?>/portal/admin/">Admin Portal</a>
             </div>
         </div>
     </section>
 </nav>
 
+
+<!-- script -->
 <script src="<?php echo  $hostPath; ?>/script/search.js"></script>
+<script src="<?php echo  $node_modulesPath; ?>/aos/dist/aos.js"></script>
+<script src="<?php echo  $host; ?>/aos.js"></script>

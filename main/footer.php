@@ -1,5 +1,3 @@
-<link rel="stylesheet" href="./style/footer.css">
-
 <?php
 $path = $_SERVER['DOCUMENT_ROOT'] . '/main';
 
@@ -10,7 +8,7 @@ $hostPath = $host . "/main";
 
 <?php // echo  $host . "<br>" . $hostPath; 
 ?>
-
+<link rel="stylesheet" href="<?php echo $hostPath ?>/style/footer.css">
 <footer>
     <div class="container">
         <div class="about">
