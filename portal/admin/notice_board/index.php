@@ -1,18 +1,27 @@
 <?php
+$path = $_SERVER['DOCUMENT_ROOT'] . '/main';
+
+$protocol = stripos($_SERVER['SERVER_PROTOCOL'], 'https') === true ? 'https://' : 'http://';
+$host = 'http://' . $_SERVER['HTTP_HOST'];
+
 // sometimes this will not work and you need to configure from php.ini file manually.
 // ini_set('upload_max_filesize', '20M'); // Set maximum upload file size to 20 megabytes
 // ini_set('post_max_size', '20M');        // Set maximum POST data size to 20 megabytes
 
-require_once('../../../conn.php');
+require($_SERVER['DOCUMENT_ROOT'] . '/conn.php');
 date_default_timezone_set('Asia/Dhaka');
+
+require($_SERVER["DOCUMENT_ROOT"] . "/vendor/autoload.php");
+
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    // $title = $_POST['title'];
     $title = htmlspecialchars($_POST["title"]);
-    // $content = $_POST['content'];
-    $content = htmlspecialchars($_POST["content"]);
-    $timestamp = date('Y-m-d-H-i-s');
+    // Encode content before insertion
+    $content = base64_encode($_POST['content']);
+    $timestamp = date('Y/m/d - h:i:s A');
 
     // Process file upload if a file is provided
     if (isset($_FILES['file']) && $_FILES['file']['error'] !== UPLOAD_ERR_NO_FILE) {
@@ -24,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $fileName = $_FILES['file']['name'];
         $fileType = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
-        $timestampString = str_replace([' ', ':', '-'], '', $timestamp); // Convert timestamp to a string without spaces, colons, and hyphens
+        $timestampString = str_replace(['/', ' ', ':', '-', 'AM', 'PM'], '', $timestamp); // Convert timestamp to a string without spaces, colons, and hyphens
 
         $maxFileSize = 20 * 1024 * 1024; // 20MB in bytes
         if ($_FILES['file']['size'] > $maxFileSize) {
@@ -37,8 +46,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $filePath = $targetPdf . $timestampString . '_' . $fileName;
                 break;
             case 'jpg':
+            case 'jpeg':
             case 'png':
             case 'webp':
+            case 'svg':
             case 'gif':
                 $filePath = $targetImage . $timestampString . '_' . $fileName;
                 break;
@@ -49,12 +60,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 break;
             default:
                 // Handle other file types or show an error message
+                header("Location: $host/portal/admin/");
+                echo "<script>alert('Unsupported file type or error during upload.')</script>";
                 break;
         }
 
         if (!empty($filePath)) {
             // Move the uploaded file to the specified folder
             move_uploaded_file($_FILES['file']['tmp_name'], $filePath);
+
+            // Retrieve the file extension
+            $fileExtension = pathinfo($filePath, PATHINFO_EXTENSION);
+
+            // Check if the file extension corresponds to an image type
+            $allowedExtensions = ['jpg', 'jpeg', 'png', 'webp'];
+            if (in_array(strtolower($fileExtension), $allowedExtensions)) {
+                // Open the uploaded image using Intervention Image
+                $manager = new ImageManager(Driver::class);
+
+                // Read file using Intervention Image
+                $image = $manager->read($filePath);
+
+                // scale down to fixed width
+                $image->scaleDown(width: 500);
+
+                // Convert the image to webp
+                $encode = $image->toWebp();
+
+                // Save the image after modifications with the new extension
+                $newFilePath = str_replace($fileExtension, 'webp', $filePath);
+                $encode->save($newFilePath);
+
+                // Update $filePath to the new file path with the WebP extension if needed
+                $filePath = $newFilePath;
+            }
 
             // Insert data into the notice_board table
 
@@ -66,7 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 die(print_r(sqlsrv_errors(), true));
             }
             // echo "File uploaded successfully!";
-            header("Location: ../../../portal/admin/");
+            header("Location: $host/portal/admin/");
         } else {
             echo "Unsupported file type or error during upload.";
         }
@@ -79,7 +118,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             die(print_r(sqlsrv_errors(), true));
         }
         // echo "File uploaded successfully!";
-        header("Location: ../../../portal/admin/");
+        header("Location: $host/portal/admin/");
     }
 }
 ?>
@@ -97,12 +136,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <div>
                 <label for="content">Content</label>
-                <textarea name="content" rows="3" placeholder="Enter content here"></textarea>
+                <textarea name="content" rows="3" placeholder="Enter content here...&#10;Tips: Content support Markdown"></textarea>
             </div>
 
-            <div>
-                <label for="file">Choose File <i>(20 MB max)</i></label>
-                <input type="file" name="file" accept=".pdf, .jpg, .png, .webp, .gif, .mp4, .webm, .mov">
+            <div class="file">
+                <span id="fileUpload">Drop or Click to add file <i>(20 MB max)</i></span>
+                <input onchange="readFile(this);" onclick="this.value=null;" type="file" name="file" id="file" accept="image/svg+xml, image/*, video/*, application/pdf">
+                <img id="preview" />
             </div>
 
             <button class="submit" type="submit">Publish Notice</button>
@@ -112,11 +152,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <section>
 
         <div class="notice">
-            <h1>NOTICE BOARD</h1>
+            <h1 class="notice_title">NOTICE BOARD</h1>
             <div id="notice_body">
                 <?php
-                require('../../../conn.php');
-                require_once('./notice_board.php');
+                require_once($_SERVER['DOCUMENT_ROOT'] . '/notice_board.php');
                 ?>
             </div>
         </div>

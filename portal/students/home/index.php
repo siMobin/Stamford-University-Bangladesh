@@ -1,5 +1,5 @@
 <?php
-require_once('../../../conn.php');
+require($_SERVER['DOCUMENT_ROOT'] . '/conn.php');
 session_start();
 
 // Check if the user is logged in
@@ -76,14 +76,15 @@ sqlsrv_close($conn);
 ?>
 
 <div class="notice">
-    <h1>NOTICE BOARD</h1>
+    <h1 class="notice_title">NOTICE BOARD</h1>
     <div id="notice_body">
         <?php
-        require('../../../conn.php');
-        require_once('./notice_board.php');
+        require($_SERVER['DOCUMENT_ROOT'] . '/conn.php');
+        require_once($_SERVER['DOCUMENT_ROOT'] . '/notice_board.php');
         ?>
     </div>
 </div>
+
 </section>
 
 <section class="contact">

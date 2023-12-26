@@ -1,4 +1,53 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css";
+
+$white: white;
+$blue_white: rgb(223, 234, 255);
+$blue_lite: rgb(25, 47, 89);
+$blue: rgb(5, 15, 30);
+
+
+.notice {
+    border: 1px dotted $blue_lite;
+    border-radius: 10px;
+    overflow: hidden;
+
+
+    .notice_title {
+        color: rgba($white, 1);
+        background-color: $blue_lite;
+        text-align: center;
+        font-size: 20px;
+    }
+}
+
+@mixin resetAndSetHeadings() {
+    $headings: (
+        h1: 30px,
+        h2: 25px,
+        h3: 20px,
+        h4: 18px,
+        h5: 16px,
+        h6: 14px
+    );
+
+@each $heading, $size in $headings {
+    #{$heading} {
+        background-color: unset;
+        color: unset;
+        text-align: unset;
+        margin: unset;
+        padding: unset;
+        text-decoration: unset;
+        // font-weight: inherit;
+        font-size: $size;
+    }
+}
+}
+
 #notice_body {
+    @include resetAndSetHeadings();
+
     .notice_board {
         height: 100vh;
         overflow-y: scroll;
@@ -29,7 +78,7 @@
 
     .timestamp {
         font-size: 10px;
-        margin-bottom: .5em;
+        margin: .5em 0;
         font-style: italic;
         color: rgba($blue_lite, .7);
     }

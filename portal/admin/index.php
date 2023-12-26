@@ -1,3 +1,12 @@
+<?php
+$path = $_SERVER['DOCUMENT_ROOT'] . '/main';
+
+$protocol = stripos($_SERVER['SERVER_PROTOCOL'], 'https') === true ? 'https://' : 'http://';
+$host = 'http://' . $_SERVER['HTTP_HOST'];
+$hostPath = $host . "/main";
+$node_modulesPath = $host . "/node_modules";
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -42,11 +51,16 @@
         <!-- Page content will be loaded here -->
     </main>
 
+    <!-- scripts  -->
 
     <script src="./script/index.js"></script> <!-- NOTE: Require Top -->
+    <script src="<?php echo  $node_modulesPath; ?>/jquery/dist/jquery.min.js"></script>
+    <!-- Other scripts will be included bellow -->
+
     <script src="./script/admissionoffline.js"></script>
     <script src="./script/course_assign.js"></script>
     <script src="./script/live_search.js"></script>
+    <script src="./script/input_preview.js"></script>
 
 </body>
 

@@ -35,15 +35,17 @@
     <section id="info" class="info">
 
         <div class="notice_wrapper">
+
             <div class="notice">
-                <h1>NOTICE BOARD</h1>
+                <h1 class="notice_title">NOTICE BOARD</h1>
                 <div id="notice_body">
                     <?php
-                    require('../conn.php');
-                    require_once('./notice_board/notice_board.php');
+                    require($_SERVER['DOCUMENT_ROOT'] . '/conn.php');
+                    require_once($_SERVER['DOCUMENT_ROOT'] . '/notice_board.php');
                     ?>
                 </div>
             </div>
+
         </div>
 
         <div class="facebook">
