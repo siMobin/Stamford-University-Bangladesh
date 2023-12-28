@@ -20,7 +20,6 @@ if (!isset($_GET["course_code"])) {
     $_SESSION['courseCode'] = $courseCode;
 }
 
-
 require('../../../conn.php');
 ?>
 
@@ -35,75 +34,85 @@ require('../../../conn.php');
 </head>
 
 <body>
+    <form method="POST" action="send_email.php" enctype="multipart/form-data"> <!-- Added opening form tag -->
 
-    <?php
+        <div>
+            <label>Email Subject:</label>
+            <input type="text" name="email_subject" required="required">
+        </div>
+        <div>
+            <label>Email Message:</label>
+            <textarea name="email_message" required="required"></textarea>
+        </div>
+        <div>
+            <label>Attachments:</label>
+            <input type="file" name="attachment[]" multiple> <!-- Added '[]' for multiple file uploads -->
+        </div>
 
-    // Fetch student details for the selected course, including firstname, lastname, and email
-    $query = "SELECT c.studentID, c.mid, c.final, c.thirtyPercent, 
-        CONCAT(s.FirstName, ' ', s.LastName) AS name, s.Email
- FROM CRS_confirm c
- INNER JOIN students s ON c.studentID = s.StudentId
- WHERE c.course_code = ?";
-    $params = array($courseCode);
-    $result = sqlsrv_query($conn, $query, $params);
-    if ($result === false) {
-        die(print_r(sqlsrv_errors(), true));
-    }
-
-    echo '<div class="table_wrapper">';
-    echo '<table id="sqlTable" border="1">';
-    echo '<tr>
-        <th>Student ID</th>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Mid</th>
-        <th>Final</th>
-        <th>30%</th>
-        <th>Total</th>';
-    while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
-        $row['total'] = $row['mid'] + $row['final'] + $row['thirtyPercent'];
-        echo '<tr>';
-        echo '<td>' . $row['studentID'] . '</td>';
-        echo '<td>' . $row['name'] . '</td>';
-        echo '<td>' . $row['Email'] . '</td>';
-        // echo '<td>' . $row['batch'] . '</td>';
-        echo '<td contenteditable="true" data-col="mid" data-row="' . $row['studentID'] . '">' . $row['mid'] . '</td>';
-        echo '<td contenteditable="true" data-col="final" data-row="' . $row['studentID'] . '">' . $row['final'] . '</td>';
-        echo '<td contenteditable="true" data-col="thirtyPercent" data-row="' . $row['studentID'] . '">' . $row['thirtyPercent'] . '</td>';
-        echo '<td>' . $row['total'] . '</td>';
-        echo '</tr>';
-    }
-    echo '</table>';
-    echo '</div>';
-
-    // Fetch courses for the faculty
-    $query = "SELECT course_code, course_name FROM course_load WHERE facultyID = ? and course_code = ?";
-    $params = array($FacultyId, $courseCode);
-    $result = sqlsrv_query($conn, $query, $params);
-
-    if ($result === false) {
-        echo "Error fetching courses: " . print_r(sqlsrv_errors(), true);
-    } else {
-        if (sqlsrv_has_rows($result)) {
-
-            while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
-                $courseCode = $row['course_code'];
-
-                // TODO: list
-                // $courseName = $row['course_name'];
-
-                echo "
-                    <a class='submit' href='download.php?course_code=$courseCode'>Download</a>
-                  ";
-            }
-        } else {
-            echo "Server Error";
+        <?php
+        // Fetch student details for the selected course, including firstname, lastname, and email
+        $query = "SELECT c.studentID, c.mid, c.final, c.thirtyPercent, 
+            CONCAT(s.FirstName, ' ', s.LastName) AS name, s.Email
+            FROM CRS_confirm c
+            INNER JOIN students s ON c.studentID = s.StudentId
+            WHERE c.course_code = ?";
+        $params = array($courseCode);
+        $result = sqlsrv_query($conn, $query, $params);
+        if ($result === false) {
+            die(print_r(sqlsrv_errors(), true));
         }
-    }
+        echo '<div class="table_wrapper">';
+        echo '<table id="sqlTable" border="1">';
+        echo '<tr>
+            <th>Student ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Email To</th>
+            <th>Mid</th>
+            <th>Final</th>
+            <th>30%</th>
+            <th>Total</th>';
+        while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
+            $row['total'] = $row['mid'] + $row['final'] + $row['thirtyPercent'];
+            echo '<tr>';
+            echo '<td>' . $row['studentID'] . '</td>';
+            echo '<td>' . $row['name'] . '</td>';
+            echo '<td>' . $row['Email'] . '</td>';
+            // Add checkbox for each student
+            echo '<td><input type="checkbox" checked name="selected_students[]" value="' . $row['Email'] . '"></td>';
+            echo '<td contenteditable="true" data-col="mid" data-row="' . $row['studentID'] . '">' . $row['mid'] . '</td>';
+            echo '<td contenteditable="true" data-col="final" data-row="' . $row['studentID'] . '">' . $row['final'] . '</td>';
+            echo '<td contenteditable="true" data-col="thirtyPercent" data-row="' . $row['studentID'] . '">' . $row['thirtyPercent'] . '</td>';
+            echo '<td>' . $row['total'] . '</td>';
+            echo '</tr>';
+        }
+        echo '</table>';
+        echo '<center><button type="submit" name="send_email" class="btn btn-primary"><span class="glyphicon glyphicon-envelope"></span> Send Email</button></center>';
+        echo '</div>';
 
-    sqlsrv_free_stmt($result);
-    sqlsrv_close($conn);
-    ?>
+        // Fetch courses for the faculty
+        $query = "SELECT course_code, course_name FROM course_load WHERE facultyID = ? and course_code = ?";
+        $params = array($FacultyId, $courseCode);
+        $result = sqlsrv_query($conn, $query, $params);
+
+        if ($result === false) {
+            echo "Error fetching courses: " . print_r(sqlsrv_errors(), true);
+        } else {
+            if (sqlsrv_has_rows($result)) {
+                while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
+                    $courseCode = $row['course_code'];
+
+                    echo "<a class='submit' href='download.php?course_code=$courseCode'>Download</a>";
+                }
+            } else {
+                echo "Server Error";
+            }
+        }
+
+        sqlsrv_free_stmt($result);
+        sqlsrv_close($conn);
+        ?>
+    </form> <!-- Added closing form tag -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         $('#sqlTable td').on('input', function() {
@@ -117,6 +126,22 @@ require('../../../conn.php');
             });
         });
     </script>
+    <?php
+    if (isset($_SESSION['status'])) {
+        if ($_SESSION['status'] == "ok") {
+    ?>
+            <div class="alert alert-info"><?php echo $_SESSION['result'] ?></div>
+        <?php
+        } else {
+        ?>
+            <div class="alert alert-danger"><?php echo $_SESSION['result'] ?></div>
+    <?php
+        }
+
+        unset($_SESSION['result']);
+        unset($_SESSION['status']);
+    }
+    ?>
 </body>
 
 </html>
