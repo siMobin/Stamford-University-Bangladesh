@@ -1,6 +1,5 @@
 @use '../style/root' as *;
 
-
 .back_to {
     display: flex;
     align-items: center;
@@ -11,6 +10,7 @@
     text-decoration: none;
     font-size: 20px;
     font-weight: 600;
+    width: max-content;
 
     i {
         font-size: 30px;
@@ -27,7 +27,7 @@ table {
     td {
         padding: .2em .5em;
 
-        &:focus-within {
+        &:focus-within:not(:has(input[type=checkbox])) {
             background-color: $blue_lite;
             color: $white;
             font-weight: 600;
@@ -44,8 +44,134 @@ table {
     td {
         text-align: center;
     }
+
+    td {
+        height: max-content;
+        overflow: hidden;
+
+        &:has(input[type=checkbox]) {
+            color: $white; // Not Mandatory
+        }
+    }
+
+    input[type=checkbox] {
+        scale: 20;
+        z-index: 99999;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+    span * {
+        font-size: 30px;
+    }
+
+    input[type=checkbox]:checked~span {
+        color: $blue_lite;
+    }
+
+    input[type=checkbox]:not(:checked)~span {
+        color: red;
+
+    }
+
+    tr:has(input[type=checkbox]:not(:checked)) {
+        color: red;
+
+        .email {
+            text-decoration: line-through;
+        }
+
+        span {
+            i::before {
+                content: "\f00d";
+            }
+        }
+    }
 }
 
 .submit {
-    margin: 1em;
+    margin-top: 1em;
+}
+
+.mail_title {
+    font-size: 24px;
+    text-align: center;
+    margin-top: 2em;
+    margin-bottom: 1em;
+    text-decoration: underline;
+}
+
+.mail_box {
+    .box {
+        margin-bottom: 1em;
+        display: flex;
+        flex-direction: column;
+        border: 1px solid $blue_lite;
+        gap: 1em;
+        justify-content: center;
+        border-radius: 10px;
+        overflow: hidden;
+        position: relative;
+
+        label {
+            padding: .5em;
+            font-size: 18px;
+            font-weight: 600;
+
+            &:has(span) {
+                span {
+                    font-weight: 400;
+                    font-size: 12px;
+
+                    a {
+                        font-style: italic;
+                    }
+                }
+            }
+        }
+
+        strong {
+            padding-left: .5em;
+        }
+    }
+
+    input,
+    textarea {
+        background-color: rgba($blue_white, 1);
+        padding: .5em 1em;
+        // border-radius: 10px;
+        border: none;
+        outline: none;
+        resize: vertical;
+
+        &:focus {
+            border: none;
+            outline: none;
+        }
+
+        &:focus-within {
+            background-color: $blue_lite;
+            color: $white;
+        }
+    }
+
+    input[type="file"] {
+        background-color: $blue_lite;
+        position: absolute;
+        transform: scale(50);
+        opacity: 0;
+        cursor: pointer !important;
+    }
+
+    #previews {
+        display: flex;
+        flex-wrap: wrap;
+        padding: .5em;
+        gap: 2em;
+
+        img {
+            max-height: 150px;
+        }
+    }
+
 }

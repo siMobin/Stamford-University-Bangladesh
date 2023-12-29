@@ -1,4 +1,11 @@
 <?php
+$path = $_SERVER['DOCUMENT_ROOT'] . '/main';
+
+$protocol = stripos($_SERVER['SERVER_PROTOCOL'], 'https') === true ? 'https://' : 'http://';
+$host = 'http://' . $_SERVER['HTTP_HOST'];
+$hostPath = $host . "/main";
+$node_modulesPath = $host . "/node_modules";
+
 session_start();
 
 if (!isset($_SESSION["FacultyId"])) {
@@ -20,7 +27,7 @@ if (!isset($_GET["course_code"])) {
     $_SESSION['courseCode'] = $courseCode;
 }
 
-require('../../../conn.php');
+require($_SERVER['DOCUMENT_ROOT'] . '/conn.php');
 ?>
 
 <!DOCTYPE html>
@@ -34,20 +41,7 @@ require('../../../conn.php');
 </head>
 
 <body>
-    <form method="POST" action="send_email.php" enctype="multipart/form-data"> <!-- Added opening form tag -->
-
-        <div>
-            <label>Email Subject:</label>
-            <input type="text" name="email_subject" required="required">
-        </div>
-        <div>
-            <label>Email Message:</label>
-            <textarea name="email_message" required="required"></textarea>
-        </div>
-        <div>
-            <label>Attachments:</label>
-            <input type="file" name="attachment[]" multiple> <!-- Added '[]' for multiple file uploads -->
-        </div>
+    <form method="POST" action="send_email.php" enctype="multipart/form-data">
 
         <?php
         // Fetch student details for the selected course, including firstname, lastname, and email
@@ -77,9 +71,15 @@ require('../../../conn.php');
             echo '<tr>';
             echo '<td>' . $row['studentID'] . '</td>';
             echo '<td>' . $row['name'] . '</td>';
-            echo '<td>' . $row['Email'] . '</td>';
+            echo '<td class="email">' . $row['Email'] . '</td>';
             // Add checkbox for each student
-            echo '<td><input type="checkbox" checked name="selected_students[]" value="' . $row['Email'] . '"></td>';
+            echo '<td><input type="checkbox" checked name="selected_students[]" value="' . $row['Email'] . '">
+      
+            <span>
+                <i class="fa-solid fa-check-double"></i>
+            </span>
+         
+            </td>';
             echo '<td contenteditable="true" data-col="mid" data-row="' . $row['studentID'] . '">' . $row['mid'] . '</td>';
             echo '<td contenteditable="true" data-col="final" data-row="' . $row['studentID'] . '">' . $row['final'] . '</td>';
             echo '<td contenteditable="true" data-col="thirtyPercent" data-row="' . $row['studentID'] . '">' . $row['thirtyPercent'] . '</td>';
@@ -87,8 +87,7 @@ require('../../../conn.php');
             echo '</tr>';
         }
         echo '</table>';
-        echo '<center><button type="submit" name="send_email" class="btn btn-primary"><span class="glyphicon glyphicon-envelope"></span> Send Email</button></center>';
-        echo '</div>';
+        echo '<br>';
 
         // Fetch courses for the faculty
         $query = "SELECT course_code, course_name FROM course_load WHERE facultyID = ? and course_code = ?";
@@ -112,8 +111,65 @@ require('../../../conn.php');
         sqlsrv_free_stmt($result);
         sqlsrv_close($conn);
         ?>
-    </form> <!-- Added closing form tag -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+        <br>
+        <br>
+        <h1 class="mail_title">Send Email To Selected Students</h1>
+
+        <div class="mail_box">
+            <div class="box">
+                <label class="required">Subject</label>
+                <input type="text" name="email_subject" spellcheck="true" required placeholder="Subject" autocomplete="off" autocapitalize="on">
+            </div>
+
+            <div class="box">
+                <label>
+                    Body
+                    <span>
+                        <strong> 💡 </strong>
+                        Your email client supports HTML and Markdown formats. Visit
+                        <a href="https://www.w3schools.com/html/" target="_blank">HTML Guide</a>
+                        or
+                        <a href="https://www.markdownguide.org" target="_blank">Markdown Guide</a>
+                        for more information.
+                    </span>
+                </label>
+
+                <textarea name="email_message" rows="5" cols="150" spellcheck="true" placeholder="Message"></textarea>
+            </div>
+
+
+            <div class="box">
+                <label>Attachments</label>
+                <div><strong>Drag and Drop files of Select Files</strong>
+                    <input type="file" name="attachment[]" onchange="readFiles(this);" onclick="this.value=null;" id="file" multiple>
+                </div>
+                <div id="previews"></div>
+            </div>
+
+        </div>
+
+        <?php
+        if (isset($_SESSION['status'])) {
+            if ($_SESSION['status'] == "ok") {
+        ?>
+                <div class="alert alert-info"><?php echo $_SESSION['result'] ?></div>
+            <?php
+            } else {
+            ?>
+                <div class="alert alert-danger"><?php echo $_SESSION['result'] ?></div>
+        <?php
+            }
+            unset($_SESSION['result']);
+            unset($_SESSION['status']);
+        }
+        ?>
+
+        <button type="submit" name="send_email" class="submit">Send Email</button>
+
+    </form>
+
+    <script src="<?php echo  $node_modulesPath; ?>/jquery/dist/jquery.min.js"></script>
     <script>
         $('#sqlTable td').on('input', function() {
             var col = $(this).data('col');
@@ -126,22 +182,7 @@ require('../../../conn.php');
             });
         });
     </script>
-    <?php
-    if (isset($_SESSION['status'])) {
-        if ($_SESSION['status'] == "ok") {
-    ?>
-            <div class="alert alert-info"><?php echo $_SESSION['result'] ?></div>
-        <?php
-        } else {
-        ?>
-            <div class="alert alert-danger"><?php echo $_SESSION['result'] ?></div>
-    <?php
-        }
-
-        unset($_SESSION['result']);
-        unset($_SESSION['status']);
-    }
-    ?>
+    <script src="<?php echo  $host; ?>/portal/faculty/script/input_preview.js"></script>
 </body>
 
 </html>
