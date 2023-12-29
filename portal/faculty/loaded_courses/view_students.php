@@ -61,7 +61,7 @@ require($_SERVER['DOCUMENT_ROOT'] . '/conn.php');
             <th>Student ID</th>
             <th>Name</th>
             <th>Email</th>
-            <th>Email To</th>
+            <th>Mail To</th>
             <th>Mid</th>
             <th>Final</th>
             <th>30%</th>

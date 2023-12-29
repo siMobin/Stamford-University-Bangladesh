@@ -87,6 +87,7 @@ if (isset($_POST['send_email'])) {
 
         // Set other email details
         $mail->addReplyTo($_ENV["EMAIL"]);
+        $mail->addReplyTo($row['Email']);
         $mail->isHTML(true);
         $mail->Subject = $email_subject;
         $mail->Body = $parsedown->text($email_message) . $FacultySign;
@@ -110,5 +111,4 @@ if (isset($_POST['send_email'])) {
 
     header("location: view_students.php?course_code={$_SESSION['courseCode']}");
     set_time_limit(ini_get('max_execution_time'));
-    // exit;
 }

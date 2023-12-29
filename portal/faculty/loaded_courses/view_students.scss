@@ -175,3 +175,19 @@ table {
     }
 
 }
+
+.alert-info {
+    color: green;
+    font-weight: 600;
+
+    &::before {
+        font-weight: 900;
+        font-family: 'Font Awesome 6 Free';
+        content: "\f00c";
+        margin-right: .3em;
+    }
+}
+
+.alert-danger {
+    color: red;
+}
