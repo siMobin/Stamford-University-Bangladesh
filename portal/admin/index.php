@@ -20,19 +20,19 @@ $node_modulesPath = $host . "/node_modules";
 <body>
     <div id="sidebar">
         <div class="logo"><img src="./images/logo_medium.png" alt=""></div>
-        <div class="menu-item active" data-page="home">Page 1</div>
-        <div class="menu-item" data-page="students">Students</div>
-        <div class="menu-item" data-page="admissionoffline">Offline Admission</div>
-        <div class="menu-item" data-page="notice_board">Notice</div>
-        <div class="menu-item" data-page="course_assign">Course Assign</div>
+        <div class="menu-item" data-page="home" hx-get="home" hx-target="main">Home</div>
+        <div class="menu-item" data-page="Students" hx-get="Students" hx-target="main">Students</div>
+        <div class="menu-item" data-page="admissionoffline" hx-get="admissionoffline" hx-target="main">Offline Admission</div>
+        <div class="menu-item" data-page="notice_board" hx-get="notice_board" hx-target="main">Notice</div>
+        <div class="menu-item" data-page="course_assign" hx-get="course_assign" hx-target="main">Course Assign</div>
 
         <!-- More menu items... -->
 
         <div class="menu-drop" onclick="toggleSubmenu(event)">
             Library <i class="fa-solid fa-caret-down"></i>
             <div class="submenu" id="submenu">
-                <div class="menu-item submenu-item" data-page="./p3/">Submenu 1</div>
-                <div class="menu-item submenu-item" data-page="./p3/">Submenu 2</div>
+                <div class="menu-item submenu-item" data-page="p3" hx-get="p3" hx-target="main">sub page</div>
+                <div class="menu-item submenu-item" data-page="p4" hx-get="p4" hx-target="main">sub page</div>
                 <a href="./p3/">
                     <div class="menu-item submenu-item">Submenu link</div>
                 </a>
@@ -47,12 +47,15 @@ $node_modulesPath = $host . "/node_modules";
         <h1>Lorem ipsum dolor sit amet header.</h1>
     </header>
 
+    <!-- Sidebar toggle button -->
+    <i id="sidebar-toggle" class="fa-solid fa-chevron-down"></i>
+
     <main>
         <!-- Page content will be loaded here -->
     </main>
 
     <!-- scripts  -->
-
+    <script src="<?php echo $node_modulesPath ?>/htmx.org/dist/htmx.min.js"></script>
     <script src="./script/index.js"></script> <!-- NOTE: Require Top -->
     <script src="<?php echo  $node_modulesPath; ?>/jquery/dist/jquery.min.js"></script>
     <!-- Other scripts will be included bellow -->

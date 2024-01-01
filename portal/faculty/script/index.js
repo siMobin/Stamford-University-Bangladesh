@@ -1,50 +1,61 @@
-// Function to load content for a given page
-function loadPage(page) {
-    // Create a new XMLHttpRequest
-    var xhr = new XMLHttpRequest();
+document.addEventListener('DOMContentLoaded', function () {
+    var menuItems = document.querySelectorAll('.menu-item');
 
-    // Setup the GET request
-    xhr.open('GET', page + '/', true);
-
-    // Setup the onload function
-    xhr.onload = function () {
-        if (xhr.status === 200) {
-            // Update the main content area with the loaded data
-            document.querySelector('main').innerHTML = xhr.responseText;
-        }
-    };
-
-    // Send the request
-    xhr.send();
-}
-
-// Get all menu items
-var menuItems = document.querySelectorAll('.menu-item');
-
-// Add click event listener for each menu item
-menuItems.forEach(function (menuItem) {
-    menuItem.addEventListener('click', function () {
-        // Remove the 'active' class from all menu items
-        menuItems.forEach(function (item) {
-            item.classList.remove('active');
+    /**
+     * Sets the active page and sets the `hx-get` attribute for menu items.
+     *
+     * @param {type} paramName - description of parameter
+     * @return {type} description of return value
+     */
+    function setActiveAndHxGet() {
+        const lastActivePage = localStorage.getItem('activePage');
+        menuItems.forEach(menuItem => {
+            menuItem.classList.remove('active');
+            const dataPage = menuItem.getAttribute('data-page');
+            menuItem.setAttribute('hx-get', dataPage);
+            if (dataPage === lastActivePage) {
+                menuItem.classList.add('active');
+                menuItem.setAttribute('hx-get', lastActivePage);
+            }
         });
+    }
 
-        // Add the 'active' class to the clicked menu item
-        this.classList.add('active');
+    // Simulate a click on the last active menu item after page load
+    window.addEventListener('load', function () {
+        setActiveAndHxGet();
+        var lastActivePage = localStorage.getItem('activePage');
+        var lastActiveMenuItem = document.querySelector('.menu-item[data-page="' + (lastActivePage || 'home') + '"]');
+        if (lastActiveMenuItem) {
+            lastActiveMenuItem.click();
+        }
+    });
 
-        // Get the data-page attribute of the clicked menu item
-        var page = this.getAttribute('data-page');
+    /**
+     * Handle click event.
+     *
+     * @param {Event} event - The click event.
+     * @return {undefined} This function does not return a value.
+     */
+    function handleClick(event) {
+        const { target } = event;
+        const currentPage = target.getAttribute('data-page');
+        localStorage.activePage = currentPage;
+        setActiveAndHxGet();
+    }
 
-        // Save the active menu item in localStorage
-        localStorage.setItem('activePage', page);
-
-        // Load the page content
-        loadPage(page);
+    // Attach click event listeners
+    menuItems.forEach(function (item) {
+        item.addEventListener('click', handleClick);
     });
 });
 
-// Retrieve the last active menu item from localStorage
-var lastActivePage = localStorage.getItem('activePage');
 
-// Simulate a click on the last active menu item or the default active menu item
-document.querySelector('.menu-item[data-page="' + (lastActivePage || 'home') + '"]').click();
+// Get the button and sidebar elements
+const sidebarToggle = document.getElementById('sidebar-toggle');
+const sidebar = document.getElementById('sidebar');
+
+// Add click event listener to the toggle button
+sidebarToggle.addEventListener('click', function () {
+    // Toggle the 'hidden' class on the sidebar
+    sidebar.classList.toggle('hidden');
+});

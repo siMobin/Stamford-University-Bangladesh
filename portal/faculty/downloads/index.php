@@ -5,7 +5,7 @@ $protocol = stripos($_SERVER['SERVER_PROTOCOL'], 'https') === true ? 'https://' 
 $host = 'http://' . $_SERVER['HTTP_HOST'];
 $hostPath = $host . "/main";
 
-echo "<link rel='stylesheet' href='$hostPath/style/downloads.css'>";
+// echo "<link rel='stylesheet' href='$hostPath/style/downloads.css'>";
 
 require $_SERVER['DOCUMENT_ROOT'] . '/main/downloads/body.php';
 ?>

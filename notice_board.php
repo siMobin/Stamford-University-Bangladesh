@@ -3,6 +3,8 @@ $path = $_SERVER['DOCUMENT_ROOT'] . '/main';
 
 $protocol = stripos($_SERVER['SERVER_PROTOCOL'], 'https') === true ? 'https://' : 'http://';
 $host = 'http://' . $_SERVER['HTTP_HOST'];
+$node_modulesPath = $host . "/node_modules";
+$current_page = basename($_SERVER['REQUEST_URI']);
 ?>
 
 <?php
@@ -24,6 +26,8 @@ if ($result === false) {
 ?>
 
 <link rel="stylesheet" href="<?php echo $host ?>/portal/notice.css">
+<link rel="stylesheet" href="<?php echo  $node_modulesPath; ?>/highlight.js/styles/github.min.css">
+
 <section class="notice_board">
     <?php while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) : ?>
         <div class="main">
@@ -70,3 +74,11 @@ if ($result === false) {
 
     <p class="end">END</p>
 </section>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+<script>
+    // import 'highlight.js/styles/github.css';
+    hljs.highlightAll();
+</script>

@@ -35,3 +35,27 @@ create table Faculty_phone
     FacultyId varchar(20) not null,
     Phone varchar(255) not null,
 )
+
+
+-- TODO: 
+-- Check "https://www.stamforduniversity.edu.bd/index.php/stamford/details/72"
+-- Before confirming
+create table details
+(
+    Serial int primary key identity(1,1),
+    Id varchar(20) not null,
+    Email varchar(255),
+    details varchar(255),
+    ResearchAndAwards varchar(255),
+    Publication varchar(255),
+    Others varchar(255),
+    UpdateTimeStamp DATETIME DEFAULT CURRENT_TIMESTAMP
+)
+
+CREATE TRIGGER update_timestamp ON details
+    AFTER UPDATE AS
+    BEGIN
+        UPDATE details
+            SET UpdateTimeStamp = CURRENT_TIMESTAMP FROM details
+                INNER JOIN inserted ON details.id = inserted.id;
+    END;

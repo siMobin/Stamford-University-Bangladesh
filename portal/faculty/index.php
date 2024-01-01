@@ -4,6 +4,7 @@ $path = $_SERVER['DOCUMENT_ROOT'] . '/main';
 $protocol = stripos($_SERVER['SERVER_PROTOCOL'], 'https') === true ? 'https://' : 'http://';
 $host = 'http://' . $_SERVER['HTTP_HOST'];
 $hostPath = $host . "/main";
+$node_modulesPath = $host . "/node_modules";
 
 session_start();
 
@@ -65,12 +66,11 @@ if (isset($_GET['logout'])) {
 <body>
     <div id="sidebar">
         <div class="logo"><img src="./images/logo_medium.png" alt=""></div>
-        <div class="menu-item active" data-page="home">Home</div>
-        <div class="menu-item" data-page="p2">Page 2</div>
-        <div class="menu-item" data-page="course_load">Course Load</div>
-        <div class="menu-item" data-page="loaded_courses">Loaded courses</div>
-        <div class="menu-item" data-page="downloads">Downloads</div>
-
+        <div class="menu-item" data-page="home" hx-get="home" hx-target="main">Home</div>
+        <div class="menu-item" data-page="p2" hx-get="p2" hx-target="main">Page 2</div>
+        <div class="menu-item" data-page="course_load" hx-get="course_load" hx-target="main">Course Load</div>
+        <div class="menu-item" data-page="loaded_courses" hx-get="loaded_courses" hx-target="main">Loaded courses</div>
+        <div class="menu-item" data-page="downloads" hx-get="downloads" hx-target="main">Downloads</div>
         <!-- More menu items... -->
     </div>
 
@@ -103,11 +103,15 @@ if (isset($_GET['logout'])) {
         </div>
     </header>
 
+    <!-- Sidebar toggle button -->
+    <i id="sidebar-toggle" class="fa-solid fa-chevron-down"></i>
+
     <main>
         <!-- Page content will be loaded here -->
     </main>
 
 
+    <script src="<?php echo $node_modulesPath ?>/htmx.org/dist/htmx.min.js"></script>
     <script src="./script/index.js"></script>
     <script src="<?php echo $hostPath ?>/script/downloads.js"></script>
 </body>

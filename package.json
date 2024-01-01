@@ -1,8 +1,44 @@
 {
+  "devDependencies": {
+    "chokidar-cli": "^3.0.0",
+    "npm-run-all": "^4.1.5",
+    "sass": "^1.69.6"
+  },
   "dependencies": {
     "aos": "^3.0.0-beta.6",
     "gsap": "^3.12.4",
+    "highlight.js": "^11.9.0",
+    "htmx.org": "^1.9.10",
     "jquery": "^3.7.1",
     "mouse-follower": "^1.1.2"
-  }
+  },
+  "scripts": {
+    "php-v": "php -v",
+    "composer-v": "composer --version",
+    "node-v": "node -v",
+    "npm-v": "npm -v",
+    "sass-v": "sass --version",
+    "composer-install": "composer install",
+    "postcomposer-install": "composer dump-autoload",
+    "npm-install": "npm install",
+    "compile:sass": "sass -q -s compressed --source-map ./:./",
+    "write:sass": "sass --watch -q -s compressed --source-map ./:./ --update",
+    "watch:sass": "chokidar \"**/*.{scss,sass}\" -i \"node_modules/**/*\" -i \"vendor/**/*\" -c \"npm run compile:sass\"",
+    "php": "php -S localhost:80\u000D",
+    "test": "npm-run-all -p php write:sass",
+    "system": "npm-run-all --silent -l -p *-v",
+    "preinstall-all": "npm install",
+    "install-all": "npm-run-all -l -s *-install",
+    "prestart": "npm run install-all",
+    "postprestart": "npm restart",
+    "start": "npm-run-all --parallel watch:sass php system"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.2.0"
+  },
+  "private": true,
+  "os": [
+    "!darwin"
+  ]
 }

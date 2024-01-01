@@ -10,7 +10,7 @@ $blue: rgb(5, 15, 30);
 $sidebar-width: 200px;
 
 
-* {
+*:not(pre, code) {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -56,6 +56,7 @@ $sidebar-width: 200px;
     height: 100%;
     background: $blue_white;
     overflow-y: auto;
+    transition: transform .2s linear;
 
     .logo {
         width: 100%;
@@ -115,6 +116,7 @@ nav,
 header {
     margin-left: $sidebar-width;
     padding: .5em 1em;
+    transition: margin-left .2s linear;
 }
 
 nav {
@@ -137,6 +139,54 @@ nav {
             background-color: $white;
             color: black;
             border: 1px solid $blue_lite;
+        }
+    }
+}
+
+
+#sidebar-toggle {
+    cursor: pointer;
+    position: fixed;
+    color: $blue_lite;
+    top: 50%;
+    left: $sidebar-width;
+    opacity: .5;
+    font-size: 24px;
+    transition: all .2s linear;
+    z-index: 999;
+
+    &::before {
+        content: "\f7a5";
+    }
+
+    &:hover {
+        rotate: 90deg;
+        opacity: 1;
+
+        &::before {
+            content: "\f078";
+        }
+    }
+}
+
+.hidden {
+    transition: transform .2s linear;
+    transform: translateX(-$sidebar-width);
+}
+
+body:has(.hidden) {
+
+    main,
+    nav,
+    header {
+        margin-left: 0 !important;
+    }
+
+    #sidebar-toggle {
+        left: .2em !important;
+
+        &:hover {
+            rotate: -90deg;
         }
     }
 }
