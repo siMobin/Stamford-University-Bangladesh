@@ -1,6 +1,6 @@
 {
     "require-dev": {
-        "composer": ">=2.6.6",
+        "composer": ">=2.6.5",
         "php": ">=8.2.12",
         "ext-curl": "*",
         "ext-fileinfo": "*",

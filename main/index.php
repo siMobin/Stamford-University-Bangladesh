@@ -74,7 +74,9 @@
 
     <div class="card_container">
         <div class="card">
-            <img src="https://img.freepik.com/free-photo/active-conversation-group-young-people-casual-clothes-working-modern-office_146671-16458.jpg?w=996&t=st=1701530668~exp=1701531268~hmac=3d76ca00fc2fd64eb39cd72e9fbe983808c805ba5c05f6ba1fd1396652ad873b" loading="lazy">
+            <div data-x-container data-cursor-img="https://images.unsplash.com/photo-1629904853893-c2c8981a1dc5?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+                <img data-x-image data-x-dimensions="3.3,2.05" src="https://images.unsplash.com/photo-1629904853893-c2c8981a1dc5?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" loading="lazy" />
+            </div>
             <div class="card-content">
                 <h1 class="card-title">Bachelor of Science in Computer Science & Engineering</h1>
                 <h2 class="card-subtitle">Department of Computer Science & Engineering</h2>
@@ -84,7 +86,9 @@
         </div>
 
         <div class="card">
-            <img src="https://img.freepik.com/free-photo/cheerful-vietnamese-chemist_1098-21169.jpg?w=996&t=st=1701530466~exp=1701531066~hmac=9b2a39200c585ca657ab5a43e39ea858f6f4ee37b5958888a8056cdcacdb0328" loading="lazy">
+            <div data-x-container data-cursor-video="https://scontent.cdninstagram.com/o1/v/t16/f1/m82/D84E4096C74A76201DAB3BE9984D1094_video_dashinit.mp4?efg=eyJxZV9ncm91cHMiOiJbXCJpZ193ZWJfZGVsaXZlcnlfdnRzX290ZlwiXSIsInZlbmNvZGVfdGFnIjoidnRzX3ZvZF91cmxnZW4uY2xpcHMuYzIuNzIwLmJhc2VsaW5lIn0&_nc_ht=scontent.cdninstagram.com&_nc_cat=110&vs=297186933161926_218273935&_nc_vs=HBksFQIYT2lnX3hwdl9yZWVsc19wZXJtYW5lbnRfcHJvZC9EODRFNDA5NkM3NEE3NjIwMURBQjNCRTk5ODREMTA5NF92aWRlb19kYXNoaW5pdC5tcDQVAALIAQAVAhg6cGFzc3Rocm91Z2hfZXZlcnN0b3JlL0dCUUFHUlpmVDBWMTdSVUdBSFVKaHR2dURiaHlicV9FQUFBRhUCAsgBACgAGAAbABUAACbWr7qd%2FfC2PxUCKAJDMywXQEGRBiTdLxsYEmRhc2hfYmFzZWxpbmVfMV92MREAdf4HAA%3D%3D&_nc_rid=be64bd999c&ccb=9-4&oh=00_AfDzwMcZh7_GwfWGlOP9tV7tMKcb8TEA9Xkcjq5XMOj8DQ&oe=65956607&_nc_sid=10d13b">
+                <img data-x-image data-x-dimensions="3.3,2.05" src="https://images.unsplash.com/photo-1582719366768-de4481b828ce?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" loading="lazy" />
+            </div>
             <div class="card-content">
                 <h1 class="card-title">B.Sc. (Hons.) in Microbiology</h1>
                 <h2 class="card-subtitle">Department of Microbiology</h2>

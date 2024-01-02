@@ -10,7 +10,8 @@
     "highlight.js": "^11.9.0",
     "htmx.org": "^1.9.10",
     "jquery": "^3.7.1",
-    "mouse-follower": "^1.1.2"
+    "mouse-follower": "^1.1.2",
+    "three": "^0.160.0"
   },
   "scripts": {
     "php-v": "php -v",
@@ -24,7 +25,7 @@
     "compile:sass": "sass -q -s compressed --source-map ./:./",
     "write:sass": "sass --watch -q -s compressed --source-map ./:./ --update",
     "watch:sass": "chokidar \"**/*.{scss,sass}\" -i \"node_modules/**/*\" -i \"vendor/**/*\" -c \"npm run compile:sass\"",
-    "php": "php -S localhost:80\u000D",
+    "php": "php -S localhost:80\r",
     "test": "npm-run-all -p php write:sass",
     "system": "npm-run-all --silent -l -p *-v",
     "preinstall-all": "npm install",

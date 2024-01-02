@@ -5,6 +5,7 @@ $protocol = stripos($_SERVER['SERVER_PROTOCOL'], 'https') === true ? 'https://' 
 $host = 'http://' . $_SERVER['HTTP_HOST'];
 $hostPath = $host . "/main";
 $node_modulesPath = $host . "/node_modules";
+$current_page = basename($_SERVER['REQUEST_URI']);
 ?>
 
 <?php // echo  $host . "<br>" . $hostPath; 
@@ -12,6 +13,7 @@ $node_modulesPath = $host . "/node_modules";
 
 <link rel="stylesheet" href="<?php echo $node_modulesPath ?>/aos/dist/aos.css">
 <link rel="stylesheet" href="<?php echo $hostPath ?>/style/nav.css">
+<script src="<?php echo  $node_modulesPath; ?>/htmx.org/dist/htmx.min.js"></script>
 
 <nav>
     <section class="top">
@@ -30,6 +32,13 @@ $node_modulesPath = $host . "/node_modules";
             <a href="<?php echo  $host; ?>/library">Library</a>
             <a href="<?php echo  $hostPath; ?>/career/">Career</a>
             <a href="#">avbryry</a>
+
+            <!-- Dynamic Navigation -->
+            <?php
+            if ($current_page == "course_search") {
+                echo "<a hx-get='allcourse.php' hx-target='#courseList'>see all</a>";
+            }
+            ?>
         </div>
 
     </section>
@@ -79,3 +88,5 @@ $node_modulesPath = $host . "/node_modules";
 <script src="<?php echo  $hostPath; ?>/script/search.js"></script>
 <script src="<?php echo  $node_modulesPath; ?>/aos/dist/aos.js"></script>
 <script src="<?php echo  $host; ?>/aos.js"></script>
+<!-- TODO: Buy a powerful PC -->
+<script type="module" src="<?php echo  $host; ?>/wave.js"></script>

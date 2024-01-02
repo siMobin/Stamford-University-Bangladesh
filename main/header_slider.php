@@ -16,7 +16,7 @@
 
         foreach ($images as $image) {
         ?>
-            <a class="swiper-slide" href="#">
+            <a class="swiper-slide" href="#" data-cursor-text="LINK">
                 <!-- <div > -->
                 <img class="swiper-gl-image" src="<?= $imageFolder . $image ?>" alt="" loading="lazy">
                 <!-- </div> -->
