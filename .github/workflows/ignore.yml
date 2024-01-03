@@ -17,20 +17,19 @@ jobs:
       - name: Find Ignored Items
         id: find_ignored
         run: |
-          ignored=$(find . -type f -name '*.php' -exec grep -Hn -e '@phpstan-ignore' -e 'Temporary ignored' -e 'temporary ignored' {} \; || true)
-          ignored="${ignored//'%'/'%25'}"
-          ignored="${ignored//$'\n'/'%0A'}"
-          ignored="${ignored//$'\r'/'%0D'}"
-          echo "Found TODO comments: $ignored"
-          echo "::set-output name=ignored::$ignored"
+          ignored=$(find . -type f -name '**' -not -name '*.yml' -exec grep -Hn -e '@phpstan-ignore' -e 'Temporary ignored' -e 'temporary ignored' {} \; || true)
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "ignored<<$EOF" >> $GITHUB_ENV
+          echo "$ignored" >> $GITHUB_ENV
+          echo "$EOF" >> $GITHUB_ENV
 
       - name: Discord Webhook Action
-        if: ${{ steps.find_ignored.outputs.ignored != '' }}
+        if: ${{ env.ignored != '' }}
         uses: tsickert/discord-webhook@v5.4.0
         with:
           webhook-url: ${{ secrets.WEBHOOK_URL }}
           content: |
             ### Checked out code:
             ```php
-            ${{ steps.find_ignored.outputs.ignored }}
+            ${{ env.ignored }}
             ```

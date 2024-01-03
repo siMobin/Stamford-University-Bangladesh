@@ -17,20 +17,19 @@ jobs:
       - name: Find TODOs
         id: find_todos
         run: |
-          todos=$(find . -type f -name '*.php' -exec grep -Hn -e 'TODO' -e 'todo' {} \; || true)
-          todos="${todos//'%'/'%25'}"
-          todos="${todos//$'\n'/'%0A'}"
-          todos="${todos//$'\r'/'%0D'}"
-          echo "Found TODOs: $todos"
-          echo "::set-output name=todos::$todos"
+          todos=$(find . -type f -name '**' -not -name '*.yml' -exec grep -Hn -e 'TODO' -e 'todo' -e 'Todo' {} \; || true)
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "todos<<$EOF" >> $GITHUB_ENV
+          echo "$todos" >> $GITHUB_ENV
+          echo "$EOF" >> $GITHUB_ENV
 
-      - name: Send Message
-        if: ${{ steps.find_todos.outputs.todos != '' }}
+      - name: Discord Webhook Action
+        if: ${{ env.todos != '' }}
         uses: tsickert/discord-webhook@v5.4.0
         with:
           webhook-url: ${{ secrets.WEBHOOK_URL }}
           content: |
             ### TODO LIST FOUND:
             ```php
-            ${{ steps.find_todos.outputs.todos }}
+            ${{ env.todos }}
             ```

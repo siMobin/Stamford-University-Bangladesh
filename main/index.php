@@ -141,7 +141,7 @@
 
 
 
-        <img src="https://img.freepik.com/free-photo/front-view-male-student-green-checkered-shirt-wearing-black-backpack-holding-files-smiling-blue-wall_140725-42410.jpg?w=996&t=st=1701532264~exp=1701532864~hmac=6c63c5336dcb4b839fd78148d683030ba2a1cccb351e91b24c940ed629e5455f" loading="lazy">
+        <img class="animate-img" src="https://img.freepik.com/free-photo/front-view-male-student-green-checkered-shirt-wearing-black-backpack-holding-files-smiling-blue-wall_140725-42410.jpg?w=996&t=st=1701532264~exp=1701532864~hmac=6c63c5336dcb4b839fd78148d683030ba2a1cccb351e91b24c940ed629e5455f" loading="lazy">
 
     </div>
 
@@ -154,7 +154,17 @@
     <?php require_once './footer.php'; ?>
 
     <script type="module" src="../cursor.js"></script>
+    <script src="<?php echo  $node_modulesPath; ?>/simple-parallax-js/dist/simpleParallax.min.js"></script>
+    <script>
+        const images = document.querySelectorAll('.animate-img');
+        new simpleParallax(images, {
+            delay: 2,
+            orientation: 'up',
+            scale: 1.2,
+            overflow: false,
 
+        });
+    </script>
 </body>
 
 </html>
