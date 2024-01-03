@@ -1,0 +1,36 @@
+name: Check Ignored Items
+
+on:
+  push:
+    branches:
+      - main # Adjust the branch as needed
+  schedule:
+    - cron: "00 13 * * 5" # 1:00 PM UTC every Friday
+
+jobs:
+  message:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Find Ignored Items
+        id: find_ignored
+        run: |
+          ignored=$(find . -type f -name '*.php' -exec grep -Hn -e '@phpstan-ignore' -e 'Temporary ignored' -e 'temporary ignored' {} \; || true)
+          ignored="${ignored//'%'/'%25'}"
+          ignored="${ignored//$'\n'/'%0A'}"
+          ignored="${ignored//$'\r'/'%0D'}"
+          echo "Found TODO comments: $ignored"
+          echo "::set-output name=ignored::$ignored"
+
+      - name: Discord Webhook Action
+        if: ${{ steps.find_ignored.outputs.ignored != '' }}
+        uses: tsickert/discord-webhook@v5.3.0
+        with:
+          webhook-url: ${{ secrets.WEBHOOK_URL }}
+          content: |
+            ### Checked out code:
+            ```php
+            ${{ steps.find_ignored.outputs.ignored }}
+            ```

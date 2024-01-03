@@ -81,7 +81,6 @@ require_once('../../vendor/autoload.php');
  * Generates a PDF document with the given table content.
  *
  * @param mixed $table The content of the table to be included in the PDF.
- * @throws TCPDF_Exception If there is an error during the PDF generation.
  * @return string The generated PDF document as a string.
  */
 function generatePDF($table)

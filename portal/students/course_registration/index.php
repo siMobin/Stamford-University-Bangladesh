@@ -74,33 +74,33 @@ echo "</table>";
 foreach ($matchingCourses as $course) {
     $courseCode = $course['courseCode'];
     $semester = $course['semester'];
-        // Check to see if courses are already registered for the same student and semester.
-        $sqlcheck = "SELECT * FROM CRS_confirm WHERE course_code = ? AND studentID = ? AND semester = ?";
-        $params_check = array($courseCode, $studentId, $semester);
-        $options_check = array("Scrollable" => SQLSRV_CURSOR_KEYSET);
-        $result_check = sqlsrv_query($conn, $sqlcheck, $params_check, $options_check);
-    
-        if (!$result_check) {
-            // Handle query error
-            die(print_r(sqlsrv_errors(), true));
-        }
+    // Check to see if courses are already registered for the same student and semester.
+    $sqlcheck = "SELECT * FROM CRS_confirm WHERE course_code = ? AND studentID = ? AND semester = ?";
+    $params_check = array($courseCode, $studentId, $semester);
+    $options_check = array("Scrollable" => SQLSRV_CURSOR_KEYSET);
+    $result_check = sqlsrv_query($conn, $sqlcheck, $params_check, $options_check);
+
+    if (!$result_check) {
+        // Handle query error
+        die(print_r(sqlsrv_errors(), true));
     }
-    
-        $num_rows = sqlsrv_num_rows($result_check);
-if($num_rows > 0){
+}
+
+$num_rows = sqlsrv_num_rows($result_check);
+if ($num_rows > 0) {
     echo "You are already registered for all the courses!";
-}
-else
-if ($dueamount <= 0) {
-    ?>
-    
-     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-     <input type="submit" name="register" value="Register">
-     </form>
-     <?php
-} else {
-    echo "Please pay your dues before registering.";
-}
+} else
+    /* @phpstan-ignore-next-line */
+    if ($dueamount <= 0) {
+?>
+
+    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+        <input type="submit" name="register" value="Register">
+    </form>
+<?php
+    } else {
+        echo "Please pay your dues before registering.";
+    }
 
 // Check if the register button is clicked
 if (isset($_POST['register'])) {
@@ -118,15 +118,15 @@ if (isset($_POST['register'])) {
         $courseCode = $course['courseCode'];
         $semester = $course['semester'];
 
-            // Insert data into CRS_confirm table
-            $sql_insert = "INSERT INTO CRS_confirm (course_code, studentID, semester) VALUES (?, ?, ?)";
-            $params_insert = array($courseCode, $studentId, $semester);
-            $options_insert = array("Scrollable" => SQLSRV_CURSOR_KEYSET);
-            $result_insert = sqlsrv_query($conn, $sql_insert, $params_insert, $options_insert);
-    
-            if (!$result_insert) {
-                // Handle insertion error (you can customize this part)
-                die(print_r(sqlsrv_errors(), true));
+        // Insert data into CRS_confirm table
+        $sql_insert = "INSERT INTO CRS_confirm (course_code, studentID, semester) VALUES (?, ?, ?)";
+        $params_insert = array($courseCode, $studentId, $semester);
+        $options_insert = array("Scrollable" => SQLSRV_CURSOR_KEYSET);
+        $result_insert = sqlsrv_query($conn, $sql_insert, $params_insert, $options_insert);
+
+        if (!$result_insert) {
+            // Handle insertion error (you can customize this part)
+            die(print_r(sqlsrv_errors(), true));
             // }
         }
     }
@@ -141,7 +141,7 @@ if (isset($_POST['register'])) {
 
 
     header("Location: ../");
-    
+
 
     exit;
 }

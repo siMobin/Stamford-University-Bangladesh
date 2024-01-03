@@ -1,16 +1,17 @@
 {
     "require-dev": {
-        "composer": ">=2.6.5",
         "php": ">=8.2.12",
         "ext-curl": "*",
         "ext-fileinfo": "*",
+        "ext-gd": "*",
         "ext-mbstring": "*",
         "ext-openssl": "*",
-        "ext-gd": "*",
-        "ext-zip": ">=1.21.1",
-        "ext-sqlsrv": ">=5.11",
         "ext-pdo_sqlsrv": ">=5.11",
-        "monolog/monolog": "^3.5"
+        "ext-sqlsrv": ">=5.11",
+        "ext-zip": ">=1.21.1",
+        "composer": ">=2.6.5",
+        "monolog/monolog": "^3.5",
+        "phpstan/phpstan": "^1.10.50"
     },
     "require": {
         "erusev/parsedown": "^1.7",

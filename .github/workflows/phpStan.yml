@@ -1,0 +1,64 @@
+name: PHPStan
+
+on:
+  # Run on all pushes and on all pull requests.
+  # Prevent the build from running when there are only irrelevant changes.
+  push:
+    paths:
+      - "**.php"
+      - "composer.json"
+      - "package.json"
+      - ".npmrc"
+      - ".github/"
+
+  pull_request:
+    paths:
+      - "**.php"
+      - "composer.json"
+      - "package.json"
+      - ".npmrc"
+      - ".github/"
+
+  # Allow manually triggering the workflow.
+  workflow_dispatch:
+
+jobs:
+  phpstan:
+    name: "PHP: 8.2 | PHPStan"
+
+    runs-on: "windows-latest"
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+          extensions: fileinfo,gd,zip,openssl,curl,mbstring,sqlsrv,pdo_sqlsrv
+          coverage: none
+          tools: phpstan
+
+      # Install dependencies and handle caching in one go.
+      # Dependencies need to be installed to make sure the PHPUnit classes are recognized.
+      # @link https://github.com/marketplace/actions/install-composer-dependencies
+      - name: Install Composer dependencies
+        uses: "ramsey/composer-install@v2"
+        with:
+          # Bust the cache at least once a month - output format: YYYY-MM.
+          custom-cache-suffix: $(date -u "+%Y-%m")
+
+      # Install nodejs & npm for compatibility with the project ecosystem...
+      - name: Install Node.js
+        run: |
+          Invoke-WebRequest -Uri "https://nodejs.org/dist/latest/node-v21.5.0-x64.msi" -OutFile "$env:TEMP\node-v21.5.0-x64.msi"
+          Start-Process msiexec.exe -Wait -ArgumentList "/i $env:TEMP\node-v21.5.0-x64.msi /quiet /norestart"
+      - name: Install composer dependency
+        run: composer install
+
+      - name: Install npm dependency
+        run: npm install
+
+      - name: Run PHPStan
+        run: npm run debug

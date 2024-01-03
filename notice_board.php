@@ -1,7 +1,7 @@
 <?php
 $path = $_SERVER['DOCUMENT_ROOT'] . '/main';
 
-$protocol = stripos($_SERVER['SERVER_PROTOCOL'], 'https') === true ? 'https://' : 'http://';
+$protocol = stripos($_SERVER['SERVER_PROTOCOL'], 'https') !== false ? 'https://' : 'http://';
 $host = 'http://' . $_SERVER['HTTP_HOST'];
 $node_modulesPath = $host . "/node_modules";
 $current_page = basename($_SERVER['REQUEST_URI']);

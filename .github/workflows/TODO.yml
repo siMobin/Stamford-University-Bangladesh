@@ -1,0 +1,36 @@
+name: Check TODOs
+
+on:
+  push:
+    branches:
+      - main # Adjust the branch as needed
+  schedule:
+    - cron: "00 13 * * *" # 1:00 PM UTC everyday
+
+jobs:
+  message:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Find TODOs
+        id: find_todos
+        run: |
+          todos=$(find . -type f -name '*.php' -exec grep -Hn -e 'TODO' -e 'todo' {} \; || true)
+          todos="${todos//'%'/'%25'}"
+          todos="${todos//$'\n'/'%0A'}"
+          todos="${todos//$'\r'/'%0D'}"
+          echo "Found TODOs: $todos"
+          echo "::set-output name=todos::$todos"
+
+      - name: Send Message
+        if: ${{ steps.find_todos.outputs.todos != '' }}
+        uses: tsickert/discord-webhook@v5.3.0
+        with:
+          webhook-url: ${{ secrets.WEBHOOK_URL }}
+          content: |
+            ### TODO LIST FOUND:
+            ```php
+            ${{ steps.find_todos.outputs.todos }}
+            ```

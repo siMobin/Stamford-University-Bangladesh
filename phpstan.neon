@@ -1,0 +1,24 @@
+# phpstan.neon
+parameters:
+    tmpDir: cache/test
+    ignoreErrors:
+        - '#Variable.*might not be defined#'
+        - '#Constant PDF_UNIT not found#'
+        - '#Constant PDF_PAGE_FORMAT not found#'
+        - '#Constant PDF_PAGE_ORIENTATION not found#'
+
+    # Temporary ignored
+    #   - '#Constant PDF_CREATOR not found#'
+
+    level: 4
+    paths:
+        - .
+    excludePaths:
+        - ./vendor
+        - node_modules
+        - ./temp
+        - ./TCPDF
+        - ./cache
+
+    # Temporary ignored
+        - main/course_search
