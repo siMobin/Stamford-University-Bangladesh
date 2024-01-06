@@ -38,6 +38,9 @@ require($_SERVER['DOCUMENT_ROOT'] . '/conn.php');
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo "SUB-$FacultyId@$courseCode"; ?></title>
     <link rel="stylesheet" href="./view_students.css">
+
+    <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
+    <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
 </head>
 
 <body>
@@ -127,15 +130,17 @@ require($_SERVER['DOCUMENT_ROOT'] . '/conn.php');
                     Body
                     <span>
                         <strong> 💡 </strong>
-                        Your email client supports HTML and Markdown formats. Visit
-                        <a href="https://www.w3schools.com/html/" target="_blank">HTML Guide</a>
-                        or
-                        <a href="https://www.markdownguide.org" target="_blank">Markdown Guide</a>
-                        for more information.
+                        Your email client supports <a href="https://www.w3schools.com/html/" target="_blank">HTML</a> and <a href="https://www.markdownguide.org" target="_blank">Markdown</a> formats.
                     </span>
                 </label>
 
                 <textarea name="email_message" rows="5" cols="150" spellcheck="true" placeholder="Message"></textarea>
+                <script>
+                    const easyMDE = new EasyMDE({
+                        hideIcons: ["side-by-side", "fullscreen", "heading"],
+                        showIcons: ["code", "table", "strikethrough", "horizontal-rule", "heading-1", "heading-2", "heading-3"],
+                    });
+                </script>
             </div>
 
 

@@ -17,7 +17,7 @@ jobs:
       - name: Find TODOs
         id: find_todos
         run: |
-          todos=$(find . -type f -name '**' -not -name '*.yml' -exec grep -Hn -e 'TODO' -e 'todo' -e 'Todo' {} \; || true)
+          todos=$(find . -type f -name '**' -not -name './.*' -exec grep -Hn -e 'TODO' -e 'todo' -e 'Todo' {} \; || true)
           EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
           echo "todos<<$EOF" >> $GITHUB_ENV
           echo "$todos" >> $GITHUB_ENV

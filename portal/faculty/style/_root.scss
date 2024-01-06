@@ -191,3 +191,8 @@ header {
     align-items: center;
     gap: 3em;
 }
+
+.editor-toolbar {
+    border-top: 1px solid rgba(0, 0, 0, 0) !important;
+    background-color: rgba($blue_white, .3) !important;
+}
