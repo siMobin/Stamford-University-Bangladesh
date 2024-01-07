@@ -8,8 +8,10 @@ on:
     - cron: "00 13 * * *" # 1:00 PM UTC everyday
 
 jobs:
-  message:
+  Check:
     runs-on: ubuntu-latest
+    if: github.event.repository.owner.login == github.actor # Only run on the owner's repository
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -17,7 +19,7 @@ jobs:
       - name: Find TODOs
         id: find_todos
         run: |
-          todos=$(find . -type f -name '**' -not -name './.*' -exec grep -Hn -e 'TODO' -e 'todo' -e 'Todo' {} \; || true)
+          todos=$(find . -type d \( -name .git -o -name .github \) -prune -o -type f -exec grep -Hn -e 'TODO' -e 'todo' -e 'Todo' {} \; || true)
           EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
           echo "todos<<$EOF" >> $GITHUB_ENV
           echo "$todos" >> $GITHUB_ENV

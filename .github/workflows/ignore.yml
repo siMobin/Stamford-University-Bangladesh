@@ -8,8 +8,10 @@ on:
     - cron: "00 13 * * 5" # 1:00 PM UTC every Friday
 
 jobs:
-  message:
+  Check:
     runs-on: ubuntu-latest
+    if: github.event.repository.owner.login == github.actor # Only run on the owner's repository
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
