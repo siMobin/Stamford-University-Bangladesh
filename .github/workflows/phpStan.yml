@@ -31,6 +31,12 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        
+        # Install PHP & NodeJS and Setup extension
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20.x"
 
       - name: Install PHP
         uses: shivammathur/setup-php@v2
@@ -50,10 +56,10 @@ jobs:
           custom-cache-suffix: $(date -u "+%Y-%m")
 
       # Install nodejs & npm for compatibility with the project ecosystem...
-      - name: Install Node.js
-        run: |
-          Invoke-WebRequest -Uri "https://nodejs.org/dist/latest/node-v21.5.0-x64.msi" -OutFile "$env:TEMP\node-v21.5.0-x64.msi"
-          Start-Process msiexec.exe -Wait -ArgumentList "/i $env:TEMP\node-v21.5.0-x64.msi /quiet /norestart"
+      # - name: Install Node.js
+      #   run: |
+      #     Invoke-WebRequest -Uri "https://nodejs.org/dist/latest/node-v21.5.0-x64.msi" -OutFile "$env:TEMP\node-v21.5.0-x64.msi"
+      #     Start-Process msiexec.exe -Wait -ArgumentList "/i $env:TEMP\node-v21.5.0-x64.msi /quiet /norestart"
       - name: Install composer dependency
         run: composer install
 

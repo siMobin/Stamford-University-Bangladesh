@@ -15,13 +15,10 @@ function generatePDF($department, $courses)
     $pdf->SetSubject("Courses for $department department");
     $pdf->SetKeywords('Courses, Department, PDF');
 
-
-    // $formattedDateTime = "";
     // Get the current date and time with milliseconds
     $currentDateTime = new DateTime();
     $formattedDateTime = $currentDateTime->format("Y-m-d H:i:s.v");
 
-    // Print the formatted date and time
     // Add a page
     $pdf->AddPage();
 
@@ -42,7 +39,6 @@ function generatePDF($department, $courses)
     // Generate PDF content
     $pdfContent = '';
     if (isset($courses[$department])) {
-        // $pdfContent .= "<h2>Courses for $department department</h2>";
         $pdf->Cell(0, 0, "Courses for $department department", 0, 1, 'C');
         foreach ($courses[$department] as $semester => $coursesList) {
             $pdfContent .= "<h3>Semester $semester:</h3>";
@@ -81,7 +77,6 @@ function generatePDF($department, $courses)
     exit;
 }
 
-
 // Check if form is submitted for generating PDF
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["generatePDF"])) {
     if (isset($_POST["department"])) {
@@ -107,31 +102,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["generatePDF"])) {
 <body>
     <header>
         <?php
-        // TODO: FIx this
-        // require '../nav.php';
+        // Check if form is submitted and a department is selected
+        if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["department"])) {
+            // If a department is selected, do not include the header
+        } else {
+            require '../nav.php';
+        }
         ?>
     </header>
 
     <?php if ($_SERVER["REQUEST_METHOD"] !== "POST") { ?>
         <div class="select_area">
             <label for="department">Select Department:</label>
-            <select name="department" id="department">
-                <?php
-                // Read the JSON file content
-                $jsonData = file_get_contents('../../storage/json_files/course_info.json');
+            <form method="post" action="">
+                <select name="department" id="department">
+                    <?php
+                    // Read the JSON file content
+                    $jsonData = file_get_contents('../../storage/json_files/course_info.json');
 
-                // Decode the JSON data into an associative array
-                $courses = json_decode($jsonData, true);
+                    // Decode the JSON data into an associative array
+                    $courses = json_decode($jsonData, true);
 
-                // Extract department names from the JSON file
-                $departmentNames = array_keys($courses);
+                    // Extract department names from the JSON file
+                    $departmentNames = array_keys($courses);
 
-                // Generate options for dropdown from department names
-                foreach ($departmentNames as $department) {
-                    echo "<option value=\"$department\">$department</option>";
-                }
-                ?>
-            </select>
+                    // Generate options for dropdown from department names
+                    foreach ($departmentNames as $department) {
+                        echo "<option value=\"$department\">$department</option>";
+                    }
+                    ?>
+                </select>
+            </form>
         </div>
     <?php } ?>
 
@@ -193,17 +194,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["generatePDF"])) {
         ?>
     </div>
 
-    <!-- Add download button -->
-    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-        <input type="hidden" name="generatePDF" value="true">
-        <input type="hidden" name="department" value="<?php echo isset($_POST["department"]) ? $_POST["department"] : ''; ?>">
-        <button class="submit" type="submit">Download as PDF</button>
-    </form>
-
-
     <?php
-    // TODO: Fix this
-    // require '../footer.php';
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["department"])) {
+        require 'button.php';
+    } else {
+        require '../footer.php';
+    }
     ?>
 
     <script>
