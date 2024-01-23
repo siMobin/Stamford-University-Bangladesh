@@ -125,4 +125,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <input class="submit" type="submit" value="Assign Courses">
 </form>
-<!-- <script src="../script/course_assign.js"></script> -->
+ <script src="../script/course_assign.js"></script>

@@ -24,7 +24,7 @@ $node_modulesPath = $host . "/node_modules";
         <div class="menu-item" data-page="Students" hx-get="Students" hx-target="main">Students</div>
         <div class="menu-item" data-page="admissionoffline" hx-get="admissionoffline" hx-target="main">Offline Admission</div>
         <div class="menu-item" data-page="notice_board" hx-get="notice_board" hx-target="main">Notice</div>
-        <div class="menu-item" data-page="course_assign" hx-get="course_assign" hx-target="main">Course Assign</div>
+        <a href="course_assign/index.php"> <div class="menu-item">Course Assign</div> </a>
 
         <!-- More menu items... -->
 
