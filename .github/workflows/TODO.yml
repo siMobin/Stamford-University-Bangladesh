@@ -27,7 +27,7 @@ jobs:
 
       - name: Discord Webhook Action
         if: ${{ env.todos != '' }}
-        uses: tsickert/discord-webhook@v5.4.0
+        uses: tsickert/discord-webhook@v5.5.0
         with:
           webhook-url: ${{ secrets.WEBHOOK_URL }}
           content: |
